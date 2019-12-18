@@ -1,0 +1,93 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "kalorientracker",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": [
+                        "Alexa hilfe",
+                        "Was mach ich hier",
+                        "Was kann ich hier tun",
+                        "Was kann ich tun",
+                        "Hilf mir",
+                        "Hilfe"
+                    ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "GetMaximumDailyCaloriesIntent",
+                    "slots": [],
+                    "samples": [
+                        "Gib mir meinen Kalorienbedarf",
+                        "Gib mir meinen Tagesbedarf",
+                        "Was ist denn mein Tagesbedarf",
+                        "Kalorienbedarf",
+                        "Mein Kalorienbedarf",
+                        "Tägliche Kalorien",
+                        "Tagesbedarf",
+                        "Was sind meine Täglichen Kalorien",
+                        "Was ist mein Tagesbedarf",
+                        "Was ist mein heutiger Tagesbedarf"
+                    ]
+                },
+                {
+                    "name": "SetMaximumDailyCaloriesIntent",
+                    "slots": [],
+                    "samples": [
+                        "Setz mein Maximum runter",
+                        "Setz mein Maximum niedriger",
+                        "Setz mein Maximum höher",
+                        "veränder meinen Tagesbedarf",
+                        "verringer meinen Tagesbedarf",
+                        "Erhöhe meinen Tagesbedarf",
+                        "Ich brauch mehr essen",
+                        "Ich brauch weniger essen",
+                        "Täglichen Bedarf ändern",
+                        "ich möchte weniger essen",
+                        "Ich möchte mehr essen können",
+                        "Änder meinen täglichen bedarf",
+                        "Kalorienbedarf anpassen"
+                    ]
+                },
+                {
+                    "name": "GetCurrentCaloriesIntent",
+                    "slots": [],
+                    "samples": [
+                        "Tägliche Kalorien",
+                        "Wieviele Kalorien habe ich schon zu mir genommen",
+                        "Wieviel habe ich schon gegessen"
+                    ]
+                },
+                {
+                    "name": "GetDifferenceCaloriesIntent",
+                    "slots": [
+                        {
+                            "name": "Zahl",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "Gehen noch {Zahl} Kalorien",
+                        "Wieviel noch bis zum Maximum",
+                        "Weiviele Kalorien kann ich noch zu mir nehmen",
+                        "Wieviel darf ich noch essen",
+                        "Wieviel kann ich noch essen"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}
