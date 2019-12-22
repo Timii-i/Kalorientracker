@@ -5,7 +5,9 @@
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
-                    "samples": []
+                    "samples": [
+                        "cancel"
+                    ]
                 },
                 {
                     "name": "AMAZON.HelpIntent",
@@ -20,7 +22,9 @@
                 },
                 {
                     "name": "AMAZON.StopIntent",
-                    "samples": []
+                    "samples": [
+                        "stop"
+                    ]
                 },
                 {
                     "name": "AMAZON.NavigateHomeIntent",
@@ -65,25 +69,35 @@
                     "name": "GetCurrentCaloriesIntent",
                     "slots": [],
                     "samples": [
-                        "Tägliche Kalorien",
+                        "Wie viele Kalorien habe ich schon zu mir genommen",
+                        "Wie viel habe ich schon gegessen",
                         "Wieviele Kalorien habe ich schon zu mir genommen",
                         "Wieviel habe ich schon gegessen"
                     ]
                 },
                 {
                     "name": "GetDifferenceCaloriesIntent",
-                    "slots": [
-                        {
-                            "name": "Zahl",
-                            "type": "AMAZON.NUMBER"
-                        }
-                    ],
+                    "slots": [],
                     "samples": [
-                        "Gehen noch {Zahl} Kalorien",
                         "Wieviel noch bis zum Maximum",
                         "Weiviele Kalorien kann ich noch zu mir nehmen",
                         "Wieviel darf ich noch essen",
                         "Wieviel kann ich noch essen"
+                    ]
+                },
+                {
+                    "name": "AddCaloriesIntent",
+                    "slots": [
+                        {
+                            "name": "KalorienAnz",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "Trage {KalorienAnz} Kalorien ein",
+                        "Ich habe heute {KalorienAnz} Kalorien zu mir genommen",
+                        "Ich habe heute {KalorienAnz} Kalorien gegessen",
+                        "Füge {KalorienAnz} Kalorien hinzu"
                     ]
                 }
             ],
