@@ -8,7 +8,6 @@
 //    || (handlerInput.requestEnvelope.request.type === 'Alexa.Presentation.APL.UserEvent' && handlerInput.requestEnvelope.request.arguments.length > 0);
 
 
-
 const Alexa = require('ask-sdk');
 const AWS = require('aws-sdk');
 //const Adapter = require('ask-sdk-dynamodb-persistence-adapter');
@@ -39,6 +38,7 @@ const LaunchRequestHandler = {
             .getResponse();
   }
 };
+
 //Funktion die das Datum updated, nachschaut ob der gleiche Wert heute ist
 function Update_Date_Func(DB) { //Function, mit Datenbank als Parameter
   var today = new Date();
@@ -56,6 +56,7 @@ function Update_Date_Func(DB) { //Function, mit Datenbank als Parameter
     }
   }
 }
+
 // Handler um den Tagesbedarf zu setzen
 const SetMaximumDailyCaloriesIntentHandler = {
   canHandle(handlerInput) {
@@ -68,7 +69,7 @@ const SetMaximumDailyCaloriesIntentHandler = {
       var dailyMaxCalories = parseInt(slots.DailyMaxKalorienAnz.value,10);
       
       const user = await handlerInput.attributesManager.getPersistentAttributes();
-	  Update_Date_Func(user);
+      Update_Date_Func(user);
       // Setzt den Wert für den Tagesbedarf gleich dem Wert den der User angegeben hat
       user.dailyMaxCalories = dailyMaxCalories;
       
@@ -92,7 +93,7 @@ const GetMaximumDailyCaloriesIntentHandler = {
     async handle(handlerInput) {
       
       const user = await handlerInput.attributesManager.getPersistentAttributes();
-	  Update_Date_Func(user);
+      Update_Date_Func(user);
       var dailyMaxCalories = user.dailyMaxCalories;
       
       var speakOutput = '';
@@ -120,6 +121,7 @@ const GetDifferenceCaloriesIntentHandler = {
     async handle(handlerInput) {
       
       const user = await handlerInput.attributesManager.getPersistentAttributes();
+      Update_Date_Func(user);
       var dailyMaxCalories = user.dailyMaxCalories;
       var calories = user.currentCalories;
       var caloriesDifference = dailyMaxCalories - calories;
@@ -155,7 +157,7 @@ const AddCaloriesIntentHandler = {
         //var timestamp = new Date().getTime();
         
         const user = await handlerInput.attributesManager.getPersistentAttributes();
-		Update_Date_Func(user);
+        Update_Date_Func(user);
         if(user.currentCalories)
         {
           user.currentCalories += +calories;
@@ -185,7 +187,7 @@ const GetCurrentCaloriesIntentHandler = {
   async handle(handlerInput) {
     
     const user = await handlerInput.attributesManager.getPersistentAttributes();
-	Update_Date_Func(user);
+    Update_Date_Func(user);
     var calories = user.currentCalories;
     
     var speakOutput = '';
