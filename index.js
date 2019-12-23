@@ -21,6 +21,87 @@ const LaunchRequestHandler = {
   },
 };
 
+// Handler um den Tagesbedarf zu setzen
+const SetMaximumDailyCaloriesIntentHandler = {
+  canHandle(handlerInput) {
+      return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+        && handlerInput.requestEnvelope.request.intent.name === 'SetMaximumDailyCaloriesIntent';
+    },
+    async handle(handlerInput) {
+      const slots = handlerInput.requestEnvelope.request.intent.slots;
+      // Der vom User genannte Tagesbedarf
+      var dailyMaxCalories = parseInt(slots.DailyMaxKalorienAnz.value,10);
+      
+      const user = await handlerInput.attributesManager.getPersistentAttributes();
+      // Setzt den Wert für den Tagesbedarf gleich dem Wert den der User angegeben hat
+      user.dailyMaxCalories = dailyMaxCalories;
+      
+      handlerInput.attributesManager.setPersistentAttributes(user);
+      await handlerInput.attributesManager.savePersistentAttributes(user);
+
+      var speakOutput = 'Ich habe dein Tagesbedarf auf ' + dailyMaxCalories + ' Kalorien gesetzt';
+      return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .reprompt(repromptOutput)
+            .getResponse();
+    }
+};
+
+// Handler um den Tagesbedarf abzufragen
+const GetMaximumDailyCaloriesIntentHandler = {
+  canHandle(handlerInput) {
+      return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+        && handlerInput.requestEnvelope.request.intent.name === 'GetMaximumDailyCaloriesIntent';
+    },
+    async handle(handlerInput) {
+      
+      const user = await handlerInput.attributesManager.getPersistentAttributes();
+      var dailyMaxCalories = user.dailyMaxCalories;
+      
+      var speakOutput = '';
+      if(user.dailyMaxCalories) 
+      {
+        speakOutput = 'Dein Tagesbedarf liegt bei ' + dailyMaxCalories + ' Kalorien';
+      }
+      else 
+      {
+        speakOutput = 'Du hast noch keinen Tagesbedarf angegeben. Wenn du ein Tagesbedarf hinzufügen möchtest, sage zum Beispiel: Setz mein Tagesbedarf auf 200 Kalorien';
+      }
+      return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .reprompt(repromptOutput)
+            .getResponse();
+    }
+};
+
+// Handler um die noch nötigen Kalorien, bis zum Tagesbedarf, auszugeben
+const GetDifferenceCaloriesIntentHandler = {
+  canHandle(handlerInput) {
+      return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+        && handlerInput.requestEnvelope.request.intent.name === 'GetDifferenceCaloriesIntent';
+    },
+    async handle(handlerInput) {
+      
+      const user = await handlerInput.attributesManager.getPersistentAttributes();
+      var dailyMaxCalories = user.dailyMaxCalories;
+      var calories = user.currentCalories;
+      var caloriesDifference = dailyMaxCalories - calories;
+      
+      var speakOutput = '';
+      if (calories > dailyMaxCalories) {
+        speakOutput = 'Du hast dein Tagesbedarf um ' + calories + ' Kalorien überschritten';
+      }
+      else 
+      {
+        speakOutput = 'Dir fehlen noch ' + caloriesDifference + ' Kalorien zu deinem Tagesbedarf';
+      }
+      return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .reprompt(repromptOutput)
+            .getResponse();
+    }
+};
+
 // Handler um Kalorien zum momentanen Kalorienstand hinzuzufügen
 const AddCaloriesIntentHandler = {
     canHandle(handlerInput) {
@@ -30,22 +111,25 @@ const AddCaloriesIntentHandler = {
     async handle(handlerInput) {
         const slots = handlerInput.requestEnvelope.request.intent.slots;
         // Die vom User genannte Kalorienanzahl
-        var kalorien = parseInt(slots.KalorienAnz.value,10);
+        var calories = parseInt(slots.KalorienAnz.value,10);
         // Speichert die UserID des USers
         //const userID =  this.event.context.System.user.userId;
         // Speichert das momentane Datum
         //var timestamp = new Date().getTime();
         
         const user = await handlerInput.attributesManager.getPersistentAttributes();
-        if(user.currentUser){
-          user.currentUser += +kalorien;
-        }else{
-          user.currentUser = kalorien;
+        if(user.currentCalories)
+        {
+          user.currentCalories += +calories;
+        }
+        else
+        {
+          user.currentCalories = calories;
         }
         handlerInput.attributesManager.setPersistentAttributes(user);
         await handlerInput.attributesManager.savePersistentAttributes(user);
         
-        var speakOutput = 'Ich habe ' + kalorien + ' Kalorien heute hinzugefügt';
+        var speakOutput = 'Ich habe ' + calories + ' Kalorien heute hinzugefügt';
         
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -63,11 +147,11 @@ const GetCurrentCaloriesIntentHandler = {
   async handle(handlerInput) {
     
     const user = await handlerInput.attributesManager.getPersistentAttributes();
-    var kalorien = user.currentCalories;
+    var calories = user.currentCalories;
     
     var speakOutput = '';
     if(user.currentCalories) {
-      speakOutput = 'Du hast heute schon ' + kalorien + ' zu dir genommen';
+      speakOutput = 'Du hast heute schon ' + calories + ' zu dir genommen';
     }else {
       speakOutput = 'Du hast heute noch keine Kalorien heute angegeben';
     }
@@ -142,6 +226,9 @@ const skillBuilder = Alexa.SkillBuilders.standard();
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
+    SetMaximumDailyCaloriesIntentHandler,
+    GetMaximumDailyCaloriesIntentHandler,
+    GetDifferenceCaloriesIntentHandler,
     AddCaloriesIntentHandler,
     GetCurrentCaloriesIntentHandler,
     HelpIntentHandler,

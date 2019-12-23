@@ -34,6 +34,8 @@
                     "name": "GetMaximumDailyCaloriesIntent",
                     "slots": [],
                     "samples": [
+                        "Wie hoch ist mein Tagesbedarf an Kalorien",
+                        "Was ist mein Tagebedarf",
                         "Gib mir meinen Kalorienbedarf",
                         "Gib mir meinen Tagesbedarf",
                         "Was ist denn mein Tagesbedarf",
@@ -48,8 +50,18 @@
                 },
                 {
                     "name": "SetMaximumDailyCaloriesIntent",
-                    "slots": [],
+                    "slots": [
+                        {
+                            "name": "DailyMaxKalorienAnz",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
                     "samples": [
+                        "Setz mein Tagebedarf auf {DailyMaxKalorienAnz} Kalorien",
+                        "Mein Tagebesarf ist {DailyMaxKalorienAnz} Kalorien",
+                        "Mein Tagebedarf ist {DailyMaxKalorienAnz}",
+                        "Mein Tagesbedarf sind {DailyMaxKalorienAnz} Kalorien",
+                        "Setz mein Tagesbedarf auf {DailyMaxKalorienAnz}",
                         "Setz mein Maximum runter",
                         "Setz mein Maximum niedriger",
                         "Setz mein Maximum höher",
@@ -79,6 +91,10 @@
                     "name": "GetDifferenceCaloriesIntent",
                     "slots": [],
                     "samples": [
+                        "Wie viel Kalorien fehlen mir noch bis zum Tagebedarf",
+                        "Wie viel fehlt mir nur zum Tagebedarf",
+                        "Wie viele Kalorien noch bis zum Maximum",
+                        "Wie viele Kalorien noch bis zum Tagesbedarf",
                         "Wieviel noch bis zum Maximum",
                         "Weiviele Kalorien kann ich noch zu mir nehmen",
                         "Wieviel darf ich noch essen",
