@@ -39,7 +39,23 @@ const LaunchRequestHandler = {
             .getResponse();
   }
 };
-
+//Funktion die das Datum updated, nachschaut ob der gleiche Wert heute ist
+function Update_Date_Func(DB) { //Function, mit Datenbank als Parameter
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(); //Monat gibt Zahl von 0-11 zurück, deshalb + 1
+  
+  if (!(DB.currentDate)) { //Wenn Datum keinen Wert hat, Setz den heutigen Tag ein
+    DB.currentDate = date;
+    DB.currentCalories = 0;
+  }
+  else {
+    if (DB.currentDate != date) { //Wenn Das Datum in der DB nicht das gleiche ist, wie der heutige Tag, Setz Alles um
+      DB.currentCalories = 0;
+      DB.currentDate = date;
+      
+    }
+  }
+}
 // Handler um den Tagesbedarf zu setzen
 const SetMaximumDailyCaloriesIntentHandler = {
   canHandle(handlerInput) {
@@ -52,6 +68,7 @@ const SetMaximumDailyCaloriesIntentHandler = {
       var dailyMaxCalories = parseInt(slots.DailyMaxKalorienAnz.value,10);
       
       const user = await handlerInput.attributesManager.getPersistentAttributes();
+	  Update_Date_Func(user);
       // Setzt den Wert für den Tagesbedarf gleich dem Wert den der User angegeben hat
       user.dailyMaxCalories = dailyMaxCalories;
       
@@ -75,6 +92,7 @@ const GetMaximumDailyCaloriesIntentHandler = {
     async handle(handlerInput) {
       
       const user = await handlerInput.attributesManager.getPersistentAttributes();
+	  Update_Date_Func(user);
       var dailyMaxCalories = user.dailyMaxCalories;
       
       var speakOutput = '';
@@ -137,6 +155,7 @@ const AddCaloriesIntentHandler = {
         //var timestamp = new Date().getTime();
         
         const user = await handlerInput.attributesManager.getPersistentAttributes();
+		Update_Date_Func(user);
         if(user.currentCalories)
         {
           user.currentCalories += +calories;
@@ -166,6 +185,7 @@ const GetCurrentCaloriesIntentHandler = {
   async handle(handlerInput) {
     
     const user = await handlerInput.attributesManager.getPersistentAttributes();
+	Update_Date_Func(user);
     var calories = user.currentCalories;
     
     var speakOutput = '';
