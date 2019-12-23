@@ -1,6 +1,14 @@
 /* eslint-disable  func-names */
 /* eslint-disable  no-console */
 
+//kommentar den ich noch später brauche, für touchfunktion auf dem small hub
+// const exampleIntentHandler = {
+//    canHandle (handlerInput) {
+//      return (handlerInput.requestEnvelope.request.type === 'IntentRequest' && handlerInput.requestEnvelope.request.intent.name === 'exampleIntent')
+//    || (handlerInput.requestEnvelope.request.type === 'Alexa.Presentation.APL.UserEvent' && handlerInput.requestEnvelope.request.arguments.length > 0);
+
+
+
 const Alexa = require('ask-sdk');
 const AWS = require('aws-sdk');
 //const Adapter = require('ask-sdk-dynamodb-persistence-adapter');
@@ -11,14 +19,25 @@ const LaunchRequestHandler = {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    const speechText = 'hi';
-
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .reprompt(speechText)
-      .withSimpleCard('Hello World', speechText)
-      .getResponse();
-  },
+    
+      // pulls the data from data/main.json into the skill
+      
+      const welcomeData = require('./data/welcome.json');
+      const welcome = require('./templates/welcome.json');
+      
+      const speechText = 'Willkommen bei deinem Kalorientracker. Du kannst deine täglichen Kalorien eintragen und deinen täglichen Bedarf an Kalorien angeben oder von mir ausrechnen lassen. Falls du Hilfe benötigst oder Fragen hast sag einfach Hilfe.';
+  
+      return handlerInput.responseBuilder
+        .speak(speechText)
+        .reprompt(speechText)
+                .addDirective({
+                type: 'Alexa.Presentation.APL.RenderDocument',
+                version: '1.1',
+                document: welcome,
+                datasources: welcomeData
+              })
+            .getResponse();
+  }
 };
 
 // Handler um den Tagesbedarf zu setzen

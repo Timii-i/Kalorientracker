@@ -1,0 +1,41 @@
+{
+    "bodyTemplate6Data": {
+        "type": "object",
+        "objectId": "bt6Sample",
+        "backgroundImage": {
+            "sources": [
+                {
+                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "size": "small",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                },
+                {
+                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "size": "large",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                }
+            ]
+        },
+        "textContent": {
+            "primaryText": {
+                "type": "PlainText",
+                "text": "Willkommen bei deinem Kalorientracker"
+            },
+            "secondaryText": {
+                "type": "PlainText",
+                "text": "-Kalorienbedarf berechnen"
+            },
+            "tertiaryText": {
+                "type": "PlainText",
+                "text": "-Kalorien eintragen"
+            },
+            "quaternaryText": {
+                "type": "PlainText",
+                "text": "-Kalorienbedarf festlegen"
+            }
+        },
+        "hintText": "Sag, \"Alexa, hilf mir\" falls du nicht weiter weißt."
+    }
+}
