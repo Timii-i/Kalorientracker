@@ -1,4 +1,4 @@
- /* eslint-disable  func-names */
+/* eslint-disable  func-names */
 /* eslint-disable  no-console */
 
 //kommentar den ich noch später brauche, für touchfunktion auf dem small hub
@@ -8,9 +8,11 @@
 //    || (handlerInput.requestEnvelope.request.type === 'Alexa.Presentation.APL.UserEvent' && handlerInput.requestEnvelope.request.arguments.length > 0);
 
 
+
 const Alexa = require('ask-sdk');
 const AWS = require('aws-sdk');
-const fs = require('fs');
+//const Adapter = require('ask-sdk-dynamodb-persistence-adapter');
+//const docClient = new AWS.DynamoDB.DocumentClient();
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -37,43 +39,6 @@ const LaunchRequestHandler = {
             .getResponse();
   }
 };
-
-//Funktion die das Datum updated, nachschaut ob der gleiche Wert heute ist
-function Update_Date_Func(DB) { //Function, mit Datenbank als Parameter
-  var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(); //Monat gibt Zahl von 0-11 zurück, deshalb + 1
-  
-  if (!(DB.currentDate)) { //Wenn Datum keinen Wert hat, Setz den heutigen Tag ein
-    DB.currentDate = date;
-    DB.currentCalories = 0;
-  }
-  else {
-    if (DB.currentDate != date) { //Wenn Das Datum in der DB nicht das gleiche ist, wie der heutige Tag, Setz Alles um
-      DB.currentCalories = 0;
-      DB.currentDate = date;
-      
-    }
-  }
-}
-
-// Funktion um in die JSON zu schreiben
-function Write_JSON(cal) {
-  var calories = cal;
-  
-  var data = JSON.stringify(calories, null, 2);
-  fs.writeFileSync('/tmp/test.json', data);
-  console.log('This is after the write call');
-}
-
-// Funktion um die JSON zu lesen (hauptsächlich zum debuggen) 
-function Read_JSON() {
-  
-  let rawdata = fs.readFileSync('/tmp/test.json');
-  let calories = JSON.parse(rawdata);
-  console.log('\n' + calories + '\n');
-
-console.log('This is after the read call');
-}
 
 // Handler um den Tagesbedarf zu setzen
 const SetMaximumDailyCaloriesIntentHandler = {
@@ -103,7 +68,7 @@ const SetMaximumDailyCaloriesIntentHandler = {
             .reprompt(repromptOutput)
                     .addDirective({
                       type: 'Alexa.Presentation.APL.RenderDocument',
-                      version: '1.1',
+                      version: '1,1',
                       document: SetMaximumCaloriesTemplate,
                       datasources: SetMaximumCaloriesData
                     })
@@ -139,7 +104,7 @@ const GetMaximumDailyCaloriesIntentHandler = {
             .reprompt(repromptOutput)
                  .addDirective({
                       type: 'Alexa.Presentation.APL.RenderDocument',
-                      version: '1.1',
+                      version: '1,1',
                       document: GetMaximumCaloriesTemplate,
                       datasources: GetMaximumCaloriesData
                     }) 
@@ -156,7 +121,6 @@ const GetDifferenceCaloriesIntentHandler = {
     async handle(handlerInput) {
       
       const user = await handlerInput.attributesManager.getPersistentAttributes();
-      Update_Date_Func(user);
       var dailyMaxCalories = user.dailyMaxCalories;
       var calories = user.currentCalories;
       var caloriesDifference = dailyMaxCalories - calories;
@@ -214,7 +178,7 @@ const AddCaloriesIntentHandler = {
             .reprompt(repromptOutput)
                   .addDirective({
                       type: 'Alexa.Presentation.APL.RenderDocument',
-                      version: '1.1',
+                      version: '1,1',
                       document: SubmitCaloriesTemplate,
                       datasources: SubmitCaloriesData
                     }) 
@@ -247,7 +211,7 @@ const GetCurrentCaloriesIntentHandler = {
       .reprompt(repromptOutput)
             .addDirective({
                       type: 'Alexa.Presentation.APL.RenderDocument',
-                      version: '1.1',
+                      version: '1,1',
                       document: TodaysCaloriesTemplate,
                       datasources: TodaysCaloriesData
                     }) 

@@ -108,7 +108,7 @@
                 "items": [
                     {
                         "type": "Image",
-                        "source": "${payload.bodyTemplate6Data.backgroundImage.sources[0].url}",
+                        "source": "${payload.testData.backgroundImage.sources[0].url}",
                         "scale": "best-fill",
                         "width": "100vw",
                         "height": "100vh",
@@ -124,7 +124,7 @@
                         "height": "200",
                         "textAlign": "center",
                         "fontStyle": "normal",
-                        "text": "${payload.bodyTemplate6Data.textContent.primaryText.text}"
+                        "text": "${payload.testData.textContent.primaryText.text}"
                     },
                     {
                         "type": "Container",
@@ -139,7 +139,7 @@
                                 "height": "50",
                                 "textAlign": "center",
                                 "fontStyle": "normal",
-                                "text": "${payload.bodyTemplate6Data.textContent.secondaryText.text}"
+                                "text": "${payload.testData.textContent.secondaryText.text}"
                             },
                             {
                                 "description": "auflistung der möglichen aktionen",
@@ -150,7 +150,7 @@
                                 "height": "50",
                                 "textAlign": "center",
                                 "fontStyle": "normal",
-                                "text": "${payload.bodyTemplate6Data.textContent.tertiaryText.text}"
+                                "text": "${payload.testData.textContent.tertiaryText.text}"
                             },
                             {
                                 "description": "auflistung der möglichen aktionen",
@@ -161,13 +161,13 @@
                                 "height": "50",
                                 "textAlign": "center",
                                 "fontStyle": "normal",
-                                "text": "${payload.bodyTemplate6Data.textContent.quaternaryText.text}"
+                                "text": "${payload.testData.textContent.quaternaryText.text}"
                             },
                             
                             {
                                 "when": "${viewport.shape != 'round'}",
                                 "type": "AlexaFooter",
-                                "footerHint": "${payload.bodyTemplate6Data.hintText}"
+                                "footerHint": "${payload.testData.hintText}"
                             }
                         ],
                         "grow": 1
