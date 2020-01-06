@@ -1,4 +1,4 @@
-/* eslint-disable  func-names */
+ /* eslint-disable  func-names */
 /* eslint-disable  no-console */
 
 //kommentar den ich noch später brauche, für touchfunktion auf dem small hub
@@ -10,8 +10,7 @@
 
 const Alexa = require('ask-sdk');
 const AWS = require('aws-sdk');
-//const Adapter = require('ask-sdk-dynamodb-persistence-adapter');
-//const docClient = new AWS.DynamoDB.DocumentClient();
+const fs = require('fs');
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -57,6 +56,25 @@ function Update_Date_Func(DB) { //Function, mit Datenbank als Parameter
   }
 }
 
+// Funktion um in die JSON zu schreiben
+function Write_JSON(cal) {
+  var calories = cal;
+  
+  var data = JSON.stringify(calories, null, 2);
+  fs.writeFileSync('/tmp/test.json', data);
+  console.log('This is after the write call');
+}
+
+// Funktion um die JSON zu lesen (hauptsächlich zum debuggen) 
+function Read_JSON() {
+  
+  let rawdata = fs.readFileSync('/tmp/test.json');
+  let calories = JSON.parse(rawdata);
+  console.log('\n' + calories + '\n');
+
+console.log('This is after the read call');
+}
+
 // Handler um den Tagesbedarf zu setzen
 const SetMaximumDailyCaloriesIntentHandler = {
   canHandle(handlerInput) {
@@ -95,6 +113,9 @@ const GetMaximumDailyCaloriesIntentHandler = {
       const user = await handlerInput.attributesManager.getPersistentAttributes();
       Update_Date_Func(user);
       var dailyMaxCalories = user.dailyMaxCalories;
+      // Schreibt in die JSON 
+      Write_JSON(dailyMaxCalories);
+      Read_JSON();
       
       var speakOutput = '';
       if(user.dailyMaxCalories) 
