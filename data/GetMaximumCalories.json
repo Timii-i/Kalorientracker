@@ -1,5 +1,5 @@
 {
-    "testData": {
+    "GetMaximumCaloriesData": {
         "type": "object",
         "objectId": "bt6Sample",
         "backgroundImage": {
@@ -21,19 +21,11 @@
         "textContent": {
             "primaryText": {
                 "type": "PlainText",
-                "text": "test"
+                "text": "Dein Tagesbedarf beträgt:"
             },
             "secondaryText": {
                 "type": "PlainText",
-                "text": "-Kalorienbedarf berechnen"
-            },
-            "tertiaryText": {
-                "type": "PlainText",
-                "text": "-Kalorien eintragen"
-            },
-            "quaternaryText": {
-                "type": "PlainText",
-                "text": "-Kalorienbedarf festlegen"
+                "text": "x Kalorien"
             }
         },
         "hintText": "Sag, \"Alexa, hilf mir\" falls du nicht weiter weißt."

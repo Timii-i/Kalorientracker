@@ -1,0 +1,29 @@
+{
+    "SubmitCaloriesData": {
+        "type": "object",
+        "objectId": "bt6Sample",
+        "backgroundImage": {
+            "sources": [
+                {
+                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "size": "small",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                },
+                {
+                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "size": "large",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                }
+            ]
+        },
+        "textContent": {
+            "secondaryText": {
+                "type": "PlainText",
+                "text": "Ich habe x Kalorien heute hinzugefügt."
+            }
+        },
+        "hintText": "Sag, \"Alexa, hilf mir\" falls du nicht weiter weißt."
+    }
+}

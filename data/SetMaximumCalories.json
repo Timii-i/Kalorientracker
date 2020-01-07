@@ -1,0 +1,33 @@
+{
+    "SetMaximumCaloriesData": {
+        "type": "object",
+        "objectId": "bt6Sample",
+        "backgroundImage": {
+            "sources": [
+                {
+                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "size": "small",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                },
+                {
+                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "size": "large",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                }
+            ]
+        },
+        "textContent": {
+            "primaryText": {
+                "type": "PlainText",
+                "text": "Dein neuer Tagesbedarf beträgt:"
+            },
+            "secondaryText": {
+                "type": "PlainText",
+                "text": "x Kalorien"
+            }
+        },
+        "hintText": "Sag, \"Alexa, hilf mir\" falls du nicht weiter weißt."
+    }
+}

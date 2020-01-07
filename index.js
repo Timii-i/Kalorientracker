@@ -75,6 +75,33 @@ function Read_JSON() {
 console.log('This is after the read call');
 }
 
+// testintent zum rumprobieren, später dann auch mit variable in json an die stelle schreiben etc. utterance ist "otten" falls einer probieren will
+const TestIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'TestIntent';
+  },
+  async handle(handlerInput) {
+    
+    const testData = require('./data/test.json');
+    const testTemplate = require('./templates/test.json');
+    
+    var test = 2000;
+    
+    var speakOutput = 'Ich habe dein Tagesbedarf auf ' + test + ' Kalorien gesetzt';
+      return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .reprompt(repromptOutput)
+                    .addDirective({
+                      type: 'Alexa.Presentation.APL.RenderDocument',
+                      version: '1.1',
+                      document: testTemplate,
+                      datasources: testData
+                    })
+            .getResponse();
+    }
+};
+
 // Handler um den Tagesbedarf zu setzen
 const SetMaximumDailyCaloriesIntentHandler = {
   canHandle(handlerInput) {
@@ -326,10 +353,12 @@ exports.handler = skillBuilder
     GetCurrentCaloriesIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
-    SessionEndedRequestHandler
+    SessionEndedRequestHandler,
+    TestIntentHandler
   )
   .addErrorHandlers(ErrorHandler)
   .withTableName('user')
   .withAutoCreateTable(true)
   //.withDynamoDbClient()
   .lambda();
+ 

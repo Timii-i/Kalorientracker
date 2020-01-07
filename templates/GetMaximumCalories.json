@@ -57,7 +57,7 @@
         "textStyleBase1": {
             "extend": "textStyleBase",
             "values": {
-                "fontWeight": "200",
+                "fontWeight": "600",
                 "fontFamily": "amazon ember"
             }
         },
@@ -108,7 +108,7 @@
                 "items": [
                     {
                         "type": "Image",
-                        "source": "${payload.testData.backgroundImage.sources[0].url}",
+                        "source": "${payload.GetMaximumCaloriesData.backgroundImage.sources[0].url}",
                         "scale": "best-fill",
                         "width": "100vw",
                         "height": "100vh",
@@ -124,7 +124,7 @@
                         "height": "200",
                         "textAlign": "center",
                         "fontStyle": "normal",
-                        "text": "${payload.testData.textContent.primaryText.text}"
+                        "text": "${payload.GetMaximumCaloriesData.textContent.primaryText.text}"
                     },
                     {
                         "type": "Container",
@@ -133,13 +133,14 @@
                             {
                                 "description": "auflistung der möglichen aktionen",
                                 "type": "Text",
+                                "fontSize": "70dp",
                                 "style": "textStylePrimary",
                                 "paddingLeft": "@marginLeft",
                                 "paddingRight": "@marginRight",
-                                "height": "50",
+                                "height": "80",
                                 "textAlign": "center",
                                 "fontStyle": "normal",
-                                "text": "${payload.testData.textContent.secondaryText.text}"
+                                "text": "${payload.GetMaximumCaloriesData.textContent.secondaryText.text}"
                             },
                             {
                                 "description": "auflistung der möglichen aktionen",
@@ -150,7 +151,7 @@
                                 "height": "50",
                                 "textAlign": "center",
                                 "fontStyle": "normal",
-                                "text": "${payload.testData.textContent.tertiaryText.text}"
+                                "text": "${payload.GetMaximumCaloriesData.textContent.tertiaryText.text}"
                             },
                             {
                                 "description": "auflistung der möglichen aktionen",
@@ -161,13 +162,12 @@
                                 "height": "50",
                                 "textAlign": "center",
                                 "fontStyle": "normal",
-                                "text": "${payload.testData.textContent.quaternaryText.text}"
+                                "text": "${payload.GetMaximumCaloriesData.textContent.quaternaryText.text}"
                             },
-                            
                             {
                                 "when": "${viewport.shape != 'round'}",
                                 "type": "AlexaFooter",
-                                "footerHint": "${payload.testData.hintText}"
+                                "footerHint": "${payload.GetMaximumCaloriesData.hintText}"
                             }
                         ],
                         "grow": 1
