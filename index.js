@@ -57,25 +57,6 @@ function Update_Date_Func(DB) { //Function, mit Datenbank als Parameter
   }
 }
 
-// Funktion um in die JSON zu schreiben
-//function Write_JSON(cal) {
-//  var calories = cal;
-//  
-//  var data = JSON.stringify(calories, null, 2);
-//  fs.writeFileSync('/tmp/test.json', data);
-//  console.log('This is after the write call');
-//}
-
-// Funktion um die JSON zu lesen (hauptsächlich zum debuggen) 
-//function Read_JSON() {
-//  
-//  let rawdata = fs.readFileSync('/tmp/test.json');
-//  let calories = JSON.parse(rawdata);
-//  console.log('\n' + calories + '\n');
-//
-//console.log('This is after the read call');
-//}
-
 // testintent zum rumprobieren, später dann auch mit variable in json an die stelle schreiben etc. utterance ist "otten" falls einer probieren will
 const TestIntentHandler = {
   canHandle(handlerInput) {
@@ -111,16 +92,20 @@ const SetMaximumDailyCaloriesIntentHandler = {
     },
     async handle(handlerInput) {
       
-      const SetMaximumCaloriesData = require('./data/SetMaximumCalories.json');
-      const SetMaximumCaloriesTemplate = require('./templates/SetMaximumCalores.json');
+      const SetMaximumCaloriesTemplate = require('./templates/SetMaximumCalories.json');
       
       const slots = handlerInput.requestEnvelope.request.intent.slots;
       // Der vom User genannte Tagesbedarf
       var dailyMaxCalories = parseInt(slots.DailyMaxKalorienAnz.value,10);
       
       const user = await handlerInput.attributesManager.getPersistentAttributes();
+      
       // Setzt den Wert für den Tagesbedarf gleich dem Wert den der User angegeben hat
       user.dailyMaxCalories = dailyMaxCalories;
+      
+      // ruft die Funktion auf um in die JSON für APL zu schreiben
+      changeJSON.WriteSetMaximumCaloriesJSON(dailyMaxCalories);
+      const SetMaximumCaloriesData = require('/tmp/SetMaximumCalories.json');
       
       handlerInput.attributesManager.setPersistentAttributes(user);
       await handlerInput.attributesManager.savePersistentAttributes(user);
@@ -147,13 +132,14 @@ const GetMaximumDailyCaloriesIntentHandler = {
     },
     async handle(handlerInput) {
       
-      const GetMaximumCaloriesData = require('./data/GetMaximumCalories.json');
       const GetMaximumCaloriesTemplate = require('./templates/GetMaximumCalories.json');
       
       const user = await handlerInput.attributesManager.getPersistentAttributes();
       var dailyMaxCalories = user.dailyMaxCalories;
       
+      // ruft die Funktion auf um in die JSON für APL zu schreiben
       changeJSON.WriteGetMaximumCaloriesJSON(dailyMaxCalories);
+      const GetMaximumCaloriesData = require('/tmp/GetMaximumCalories.json');
       
       var speakOutput = '';
       if(user.dailyMaxCalories) 
@@ -214,16 +200,11 @@ const AddCaloriesIntentHandler = {
     },
     async handle(handlerInput) {
       
-        const SubmitCaloriesData = require('./data/SubmitCalories.json');
         const SubmitCaloriesTemplate = require('./templates/SubmitCalories.json');
       
         const slots = handlerInput.requestEnvelope.request.intent.slots;
         // Die vom User genannte Kalorienanzahl
-        var calories = parseInt(slots.KalorienAnz.value,10);
-        // Speichert die UserID des USers
-        //const userID =  this.event.context.System.user.userId;
-        // Speichert das momentane Datum
-        //var timestamp = new Date().getTime();
+        var calories = parseInt(slots.KalorienAnz.value);
         
         const user = await handlerInput.attributesManager.getPersistentAttributes();
         if(user.currentCalories)
@@ -234,6 +215,11 @@ const AddCaloriesIntentHandler = {
         {
           user.currentCalories = calories;
         }
+        
+        // ruft die Funktion auf um in die JSON für APL zu schreiben
+        changeJSON.WriteAddCaloriesJSON(user.currentCalories);
+        const SubmitCaloriesData = require('/tmp/AddCalories.json');
+        
         handlerInput.attributesManager.setPersistentAttributes(user);
         await handlerInput.attributesManager.savePersistentAttributes(user);
         
@@ -260,11 +246,14 @@ const GetCurrentCaloriesIntentHandler = {
   },
   async handle(handlerInput) {
     
-    const TodaysCaloriesData = require('./data/TodaysCalories.json');
     const TodaysCaloriesTemplate = require('./templates/TodaysCalories.json');
     
     const user = await handlerInput.attributesManager.getPersistentAttributes();
     var calories = user.currentCalories;
+    
+    // ruft die Funktion auf um in die JSON für APL zu schreiben
+    changeJSON.WriteCurrentCaloriesJSON(calories);
+    const TodaysCaloriesData = require('/tmp/CurrentCalories.json');
     
     var speakOutput = '';
     if(user.currentCalories) {
@@ -362,5 +351,4 @@ exports.handler = skillBuilder
   .addErrorHandlers(ErrorHandler)
   .withTableName('user')
   .withAutoCreateTable(true)
-  //.withDynamoDbClient()
   .lambda();
