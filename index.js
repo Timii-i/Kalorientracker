@@ -138,6 +138,40 @@ const SetMaximumDailyCaloriesIntentHandler = {
     }
 };
 
+//Handler zum Dialog um Daily Max Calories von Alexa berechnen zu lassen
+const SetMaxDailyCaloriesByAlexaIntent = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && (handlerInput.requestEnvelope.request.intent.name === 'SetMaxDailyCaloriesByAlexaIntent');
+  },
+  async handle(handlerInput) {
+    const slots = handlerInput.requestEnvelope.request.intent.slots;
+    var KalorienMax = 0;
+    var Bewegung = slots.Bewegung.value;
+    var Geschlecht = slots.Geschlecht.value;
+    
+    if (Geschlecht == "Männlich") {
+      KalorienMax = 2000;
+    }
+    else {
+      KalorienMax = 1800;
+    }
+    
+    if (Bewegung == "Viel") {
+      KalorienMax += 200;
+    }
+    var speakOutput = "Ich habe deinen Tagesbedarf nun anhand deiner Angaben auf " + KalorienMax + "gelegt.";
+    
+    const user = await handlerInput.attributesManager.getPersistentAttributes();
+      // Setzt den Wert für den Tagesbedarf gleich dem Wert den der User angegeben hat
+      user.dailyMaxCalories = KalorienMax;
+
+    return handlerInput.responseBuilder
+      .speak(speakOutput)
+      .getResponse();
+  },
+};
+
 // Handler um den Tagesbedarf abzufragen
 const GetMaximumDailyCaloriesIntentHandler = {
   canHandle(handlerInput) {
@@ -173,6 +207,8 @@ const GetMaximumDailyCaloriesIntentHandler = {
             .getResponse();
     }
 };
+
+
 
 // Handler um die noch nötigen Kalorien, bis zum Tagesbedarf, auszugeben
 const GetDifferenceCaloriesIntentHandler = {
@@ -347,6 +383,7 @@ exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
     SetMaximumDailyCaloriesIntentHandler,
+    SetMaxDailyCaloriesByAlexaIntent,
     GetMaximumDailyCaloriesIntentHandler,
     GetDifferenceCaloriesIntentHandler,
     AddCaloriesIntentHandler,

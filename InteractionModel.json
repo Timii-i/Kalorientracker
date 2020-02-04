@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "kalorientracker",
+            "invocationName": "kalorien tracker",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
@@ -57,6 +57,7 @@
                         }
                     ],
                     "samples": [
+                        "Änder meinen Tagesbedarf auf {DailyMaxKalorienAnz} Kalorien",
                         "Setz mein Tagebedarf auf {DailyMaxKalorienAnz} Kalorien",
                         "Mein Tagebesarf ist {DailyMaxKalorienAnz} Kalorien",
                         "Mein Tagebedarf ist {DailyMaxKalorienAnz}",
@@ -115,9 +116,195 @@
                         "Ich habe heute {KalorienAnz} Kalorien gegessen",
                         "Füge {KalorienAnz} Kalorien hinzu"
                     ]
+                },
+                {
+                    "name": "SetMaxDailyCaloriesByAlexaIntent",
+                    "slots": [
+                        {
+                            "name": "Geschlecht",
+                            "type": "Geschlecht",
+                            "samples": [
+                                "{Geschlecht}",
+                                "Ich bin eine {Geschlecht}",
+                                "Ich bin {Geschlecht}",
+                                "Ich bin ein {Geschlecht}"
+                            ]
+                        },
+                        {
+                            "name": "Bewegung",
+                            "type": "Bewegung",
+                            "samples": [
+                                "ich würde sagen schon {Bewegung}",
+                                "{Bewegung}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "berechne meinen Kalorienbedarf",
+                        "änder meinen kalorienbedarf",
+                        "ich möchte meinen kalorienbedarf ändern",
+                        "tagesbedarf ausrechnen",
+                        "ich möchte meinen tagesbedarf ändern",
+                        "berechne meinen Tagesbedarf",
+                        "ich will weniger essen",
+                        "Ich will mehr essen",
+                        "Änder meinen Tagesbedarf"
+                    ]
                 }
             ],
-            "types": []
-        }
+            "types": [
+                {
+                    "name": "Geschlecht",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Weiblich",
+                                "synonyms": [
+                                    "Frau",
+                                    "Mädchen",
+                                    "Feminin"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Männlich",
+                                "synonyms": [
+                                    "Mann",
+                                    "Junge",
+                                    "Maskulin",
+                                    "Kerl"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Bewegung",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Wenig",
+                                "synonyms": [
+                                    "geht so",
+                                    "nicht so viel",
+                                    "geht",
+                                    "ein bisschen",
+                                    "a little bit",
+                                    "relativ wenig"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Viel",
+                                "synonyms": [
+                                    "schon etwas",
+                                    "einiges",
+                                    "ne menge"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "SetMaxDailyCaloriesByAlexaIntent",
+                    "delegationStrategy": "ALWAYS",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.1115303531953"
+                    },
+                    "slots": [
+                        {
+                            "name": "Geschlecht",
+                            "type": "Geschlecht",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1115303531953.209009677744"
+                            }
+                        },
+                        {
+                            "name": "Bewegung",
+                            "type": "Bewegung",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1115303531953.789205886214"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Confirm.Intent.1115303531953",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Du bist also {Geschlecht} und du bewegst dich {Bewegung} richtig?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1115303531953.209009677744",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Welches Geschlecht hast du"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Bist du männlich oder weiblich"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Slot.1115303531953.209009677744",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Du bist also {Geschlecht} , richtig?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1115303531953.789205886214",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Würdest du sagen du bewegst dich viel oder wenig"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Bewegst du dich eher viel oder wenig"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Slot.1115303531953.789205886214",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Du bewegst dich also {Bewegung} oder?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Slot.1054655127675.811348251956",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "du bist also {Geschlecht} richtig?"
+                    }
+                ]
+            }
+        ]
     }
 }
