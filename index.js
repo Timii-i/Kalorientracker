@@ -11,6 +11,7 @@
 const Alexa = require('ask-sdk');
 const AWS = require('aws-sdk');
 const fs = require('fs');
+const changeJSON = require('./changeJSON.js');
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
@@ -57,23 +58,23 @@ function Update_Date_Func(DB) { //Function, mit Datenbank als Parameter
 }
 
 // Funktion um in die JSON zu schreiben
-function Write_JSON(cal) {
-  var calories = cal;
-  
-  var data = JSON.stringify(calories, null, 2);
-  fs.writeFileSync('/tmp/test.json', data);
-  console.log('This is after the write call');
-}
+//function Write_JSON(cal) {
+//  var calories = cal;
+//  
+//  var data = JSON.stringify(calories, null, 2);
+//  fs.writeFileSync('/tmp/test.json', data);
+//  console.log('This is after the write call');
+//}
 
 // Funktion um die JSON zu lesen (hauptsächlich zum debuggen) 
-function Read_JSON() {
-  
-  let rawdata = fs.readFileSync('/tmp/test.json');
-  let calories = JSON.parse(rawdata);
-  console.log('\n' + calories + '\n');
-
-console.log('This is after the read call');
-}
+//function Read_JSON() {
+//  
+//  let rawdata = fs.readFileSync('/tmp/test.json');
+//  let calories = JSON.parse(rawdata);
+//  console.log('\n' + calories + '\n');
+//
+//console.log('This is after the read call');
+//}
 
 // testintent zum rumprobieren, später dann auch mit variable in json an die stelle schreiben etc. utterance ist "otten" falls einer probieren will
 const TestIntentHandler = {
@@ -138,40 +139,6 @@ const SetMaximumDailyCaloriesIntentHandler = {
     }
 };
 
-//Handler zum Dialog um Daily Max Calories von Alexa berechnen zu lassen
-const SetMaxDailyCaloriesByAlexaIntent = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && (handlerInput.requestEnvelope.request.intent.name === 'SetMaxDailyCaloriesByAlexaIntent');
-  },
-  async handle(handlerInput) {
-    const slots = handlerInput.requestEnvelope.request.intent.slots;
-    var KalorienMax = 0;
-    var Bewegung = slots.Bewegung.value;
-    var Geschlecht = slots.Geschlecht.value;
-    
-    if (Geschlecht == "Männlich") {
-      KalorienMax = 2000;
-    }
-    else {
-      KalorienMax = 1800;
-    }
-    
-    if (Bewegung == "Viel") {
-      KalorienMax += 200;
-    }
-    var speakOutput = "Ich habe deinen Tagesbedarf nun anhand deiner Angaben auf " + KalorienMax + "gelegt.";
-    
-    const user = await handlerInput.attributesManager.getPersistentAttributes();
-      // Setzt den Wert für den Tagesbedarf gleich dem Wert den der User angegeben hat
-      user.dailyMaxCalories = KalorienMax;
-
-    return handlerInput.responseBuilder
-      .speak(speakOutput)
-      .getResponse();
-  },
-};
-
 // Handler um den Tagesbedarf abzufragen
 const GetMaximumDailyCaloriesIntentHandler = {
   canHandle(handlerInput) {
@@ -185,6 +152,8 @@ const GetMaximumDailyCaloriesIntentHandler = {
       
       const user = await handlerInput.attributesManager.getPersistentAttributes();
       var dailyMaxCalories = user.dailyMaxCalories;
+      
+      changeJSON.WriteGetMaximumCaloriesJSON(dailyMaxCalories);
       
       var speakOutput = '';
       if(user.dailyMaxCalories) 
@@ -207,8 +176,6 @@ const GetMaximumDailyCaloriesIntentHandler = {
             .getResponse();
     }
 };
-
-
 
 // Handler um die noch nötigen Kalorien, bis zum Tagesbedarf, auszugeben
 const GetDifferenceCaloriesIntentHandler = {
@@ -383,7 +350,6 @@ exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
     SetMaximumDailyCaloriesIntentHandler,
-    SetMaxDailyCaloriesByAlexaIntent,
     GetMaximumDailyCaloriesIntentHandler,
     GetDifferenceCaloriesIntentHandler,
     AddCaloriesIntentHandler,
@@ -398,4 +364,3 @@ exports.handler = skillBuilder
   .withAutoCreateTable(true)
   //.withDynamoDbClient()
   .lambda();
- 
