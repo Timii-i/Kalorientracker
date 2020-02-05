@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "kalorien tracker",
+            "invocationName": "kalorientracker",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
