@@ -171,6 +171,16 @@ const GetDifferenceCaloriesIntentHandler = {
     },
     async handle(handlerInput) {
       
+      // if true
+      
+      const GetDiffCaloriesTemplate = require('./templates/GetDiffCalories.json');
+      const GetDiffCaloriesData = require('/tmp/GetDiffCalories.json');
+      
+      // if false - else zweig
+      
+      const GetDiff2CaloriesTemplate = require('./templates/GetDiff2Calories.json');
+      const GetDiff2CaloriesData = require('/tmp/GetDiff2Calories.json');
+      
       const user = await handlerInput.attributesManager.getPersistentAttributes();
       Update_Date_Func(user);
       var dailyMaxCalories = user.dailyMaxCalories;
@@ -180,15 +190,36 @@ const GetDifferenceCaloriesIntentHandler = {
       var speakOutput = '';
       if (calories > dailyMaxCalories) {
         speakOutput = 'Du hast dein Tagesbedarf um ' + calories + ' Kalorien überschritten';
+        return handlerInput.responseBuilder
+        .speak(speakOutput)
+        .reprompt(repromptOutput)
+        .addDirective({
+                      type: 'Alexa.Presentation.APL.RenderDocument',
+                      version: '1.1',
+                      document: GetDiffCaloriesTemplate,
+                      datasources: GetDiffCaloriesData
+                    }) 
+        .getResponse();
       }
       else 
       {
         speakOutput = 'Dir fehlen noch ' + caloriesDifference + ' Kalorien zu deinem Tagesbedarf';
+        return handlerInput.responseBuilder
+        .speak(speakOutput)
+        .reprompt(repromptOutput)
+        .addDirective({
+                      type: 'Alexa.Presentation.APL.RenderDocument',
+                      version: '1.1',
+                      document: GetDiff2CaloriesTemplate,
+                      datasources: GetDiff2CaloriesData
+                    }) 
+        .getResponse();
       }
-      return handlerInput.responseBuilder
+      /*return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt(repromptOutput)
             .getResponse();
+            */
     }
 };
 

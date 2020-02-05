@@ -14,7 +14,7 @@
             "description": "Stock color for the dark theme",
             "when": "${viewport.theme == 'dark'}",
             "colors": {
-                "colorTextPrimary": "#f0f1ef"
+                "colorTextPrimary": "#000000"
             }
         },
         {
@@ -57,14 +57,14 @@
         "textStyleBase1": {
             "extend": "textStyleBase",
             "values": {
-                "fontWeight": "600",
+                "fontWeight": "400",
                 "fontFamily": "amazon ember"
             }
         },
         "textStyleBase2": {
             "extend": "textStyleBase",
             "values": {
-                "fontWeight": "600",
+                "fontWeight": "400",
                 "fontFamily": "amazon ember"
             }
         },

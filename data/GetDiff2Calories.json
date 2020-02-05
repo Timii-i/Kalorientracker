@@ -1,5 +1,5 @@
 {
-    "GetMaximumCaloriesData": {
+    "GetDiff2CaloriesData": {
         "type": "object",
         "objectId": "bt6Sample",
         "backgroundImage": {
@@ -21,11 +21,11 @@
         "textContent": {
             "primaryText": {
                 "type": "PlainText",
-                "text": "Dein Tagesbedarf liegt bei"
+                "text": "Zu deinem Tagesbedarf fehlen"
             },
             "secondaryText": {
                 "type": "PlainText",
-                "text": "X Kalorien"
+                "text": "noch X Kalorien"
             }
         },
         "hintText": "Sag, \"Alexa, hilf mir\" falls du nicht weiter weißt."
