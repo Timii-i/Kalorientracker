@@ -1,5 +1,5 @@
 {
-    "GetCurrentCaloriesData": {
+    "DateCaloriesData": {
         "type": "object",
         "objectId": "bt6Sample",
         "backgroundImage": {
@@ -21,7 +21,7 @@
         "textContent": {
             "primaryText": {
                 "type": "PlainText",
-                "text": "Du hast heute bereits"
+                "text": "Du hast am X "
             },
             "secondaryText": {
                 "type": "PlainText",
