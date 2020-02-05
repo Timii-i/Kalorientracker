@@ -269,6 +269,35 @@ const AddCaloriesIntentHandler = {
     }
 };
 
+// Handler um Kalorien eines Bestimmten Tages anzuzeigen
+const GetCaloriesFromDateIntent = {
+    canHandle(handlerInput) {
+      return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+        && handlerInput.requestEnvelope.request.intent.name === 'GetCaloriesFromDateIntent';
+    },
+    async handle(handlerInput) {
+      
+      
+        const slots = handlerInput.requestEnvelope.request.intent.slots;
+        
+        // Das vom User genannte Datum
+        var date = slots.Datum.value;
+        
+        const user = await handlerInput.attributesManager.getPersistentAttributes();
+        
+        //Als beispiel, nehmen wir hier den derzeitigen Kalorienwert + 1000 um ihn "realistischer" zu gestalten
+        var calories = user.currentCalories + 1000; 
+        
+        var speakOutput = 'Du hast am ' + date + calories + ' Kalorien eingenommen';
+        
+        return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .reprompt(repromptOutput)
+            .getResponse();
+    }
+};
+
+
 // Handler um die am Tag schon zu sich genommenen Kalorien abzufragen 
 const GetCurrentCaloriesIntentHandler = {
   canHandle(handlerInput) {
@@ -373,6 +402,7 @@ exports.handler = skillBuilder
     GetMaximumDailyCaloriesIntentHandler,
     GetDifferenceCaloriesIntentHandler,
     AddCaloriesIntentHandler,
+	GetCaloriesFromDateIntent,
     GetCurrentCaloriesIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,

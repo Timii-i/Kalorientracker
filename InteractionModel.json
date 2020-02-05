@@ -150,6 +150,20 @@
                         "Ich will mehr essen",
                         "Änder meinen Tagesbedarf"
                     ]
+                },
+                {
+                    "name": "GetCaloriesFromDateIntent",
+                    "slots": [
+                        {
+                            "name": "Datum",
+                            "type": "AMAZON.DATE"
+                        }
+                    ],
+                    "samples": [
+                        "Wieviel Kalorien hatte ich am {Datum}",
+                        "Wieviel hab ich am {Datum} gegessen",
+                        "Wieviele Kalorien hab ich am {Datum} eingenommen"
+                    ]
                 }
             ],
             "types": [
@@ -236,6 +250,20 @@
                             "prompts": {
                                 "elicitation": "Elicit.Slot.1115303531953.789205886214"
                             }
+                        }
+                    ]
+                },
+                {
+                    "name": "GetCaloriesFromDateIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Datum",
+                            "type": "AMAZON.DATE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
                         }
                     ]
                 }
