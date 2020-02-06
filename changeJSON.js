@@ -1,9 +1,9 @@
 /* Datei um die JSON Dateien zu bearbeiten, um sie in APL benutzen zu können */
 
-//const Alexa = require('ask-sdk');
 const AWS = require('aws-sdk');
 const fs = require('fs');
 
+// definiert das Array in das die Funktionen kommt
 var functions = {};
 
 // Funktion um den neuen Wert des Tagesbedarfs in die JSON zu schreiben um in APL anzuzeigen
@@ -15,13 +15,13 @@ functions.WriteSetMaximumCaloriesJSON = function(cal) {
         "backgroundImage": {
             "sources": [
                 {
-                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
                     "size": "small",
                     "widthPixels": 0,
                     "heightPixels": 0
                 },
                 {
-                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
                     "size": "large",
                     "widthPixels": 0,
                     "heightPixels": 0
@@ -41,10 +41,11 @@ functions.WriteSetMaximumCaloriesJSON = function(cal) {
         "hintText": "Sag, \"Alexa, hilf mir\" falls du nicht weiter weißt."
     }
 };
-  
+ 
   var data = JSON.stringify(calories, null, 2);
+  
+  // erstellt und schreibt in eine JSON, die in APL benutzt wird
   fs.writeFileSync('/tmp/SetMaximumCalories.json', data);
-  console.log('This is after the write call');
 };
 
 // Funktion um den momentanen Wert des Tagesbedarfs in die JSON zu schreiben um in APL anzuzeigen
@@ -56,13 +57,13 @@ functions.WriteGetMaximumCaloriesJSON = function(cal) {
         "backgroundImage": {
             "sources": [
                 {
-                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
                     "size": "small",
                     "widthPixels": 0,
                     "heightPixels": 0
                 },
                 {
-                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
                     "size": "large",
                     "widthPixels": 0,
                     "heightPixels": 0
@@ -72,7 +73,7 @@ functions.WriteGetMaximumCaloriesJSON = function(cal) {
         "textContent": {
             "primaryText": {
                 "type": "PlainText",
-                "text": "Dein Tagesbedarf beträgt: "
+                "text": "Dein Tagesbedarf liegt bei "
             },
             "secondaryText": {
                 "type": "PlainText",
@@ -84,26 +85,27 @@ functions.WriteGetMaximumCaloriesJSON = function(cal) {
 };
   
   var data = JSON.stringify(calories, null, 2);
+  
+  // erstellt und schreibt in eine JSON, die in APL benutzt wird
   fs.writeFileSync('/tmp/GetMaximumCalories.json', data);
-  console.log('This is after the write call');
 };
 
 // Funktion um den Wert, der noch fehlenden Kalorien bis zum Tagesbedarf ,in die JSON zu schreiben um in APL anzuzeigen
 functions.WriteDifferenceCaloriesJSON = function(cal) {
   var calories = {
-    "DifferenceCaloriesData": {
+    "GetDiffCaloriesData": {
         "type": "object",
         "objectId": "bt6Sample",
         "backgroundImage": {
             "sources": [
                 {
-                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
                     "size": "small",
                     "widthPixels": 0,
                     "heightPixels": 0
                 },
                 {
-                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
                     "size": "large",
                     "widthPixels": 0,
                     "heightPixels": 0
@@ -113,11 +115,11 @@ functions.WriteDifferenceCaloriesJSON = function(cal) {
         "textContent": {
             "primaryText": {
                 "type": "PlainText",
-                "text": "So viel Kalorien fehlen dir noch bis zum Tagesbedarf: "
+                "text": "Du hast deinen Tagesbedarf um"
             },
             "secondaryText": {
                 "type": "PlainText",
-                "text": cal + " Kalorien"
+                "text": cal + " Kalorien überschritten"
             }
         },
         "hintText": "Sag, \"Alexa, hilf mir\" falls du nicht weiter weißt."
@@ -125,26 +127,69 @@ functions.WriteDifferenceCaloriesJSON = function(cal) {
 };
   
   var data = JSON.stringify(calories, null, 2);
+  
+  // erstellt und schreibt in eine JSON, die in APL benutzt wird
   fs.writeFileSync('/tmp/GetDifferenceCalories.json', data);
-  console.log('This is after the write call');
+};
+
+// Funktion um den Wert, der Kalorien die zu viel sind,in die JSON zu schreiben um in APL anzuzeigen
+functions.WriteDifferenceCalories2JSON = function(cal) {
+  var calories = {
+    "GetDiff2CaloriesData": {
+        "type": "object",
+        "objectId": "bt6Sample",
+        "backgroundImage": {
+            "sources": [
+                {
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
+                    "size": "small",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                },
+                {
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
+                    "size": "large",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                }
+            ]
+        },
+        "textContent": {
+            "primaryText": {
+                "type": "PlainText",
+                "text": "Zu deinem Tagesbedarf fehlen"
+            },
+            "secondaryText": {
+                "type": "PlainText",
+                "text": "noch " + cal + " Kalorien"
+            }
+        },
+        "hintText": "Sag, \"Alexa, hilf mir\" falls du nicht weiter weißt."
+    }
+};
+  
+  var data = JSON.stringify(calories, null, 2);
+  
+  // erstellt und schreibt in eine JSON, die in APL benutzt wird
+  fs.writeFileSync('/tmp/GetDifferenceCalories2.json', data);
 };
 
 // Funktion um den Wert, der noch fehlenden Kalorien bis zum Tagesbedarf ,in die JSON zu schreiben um in APL anzuzeigen
 functions.WriteCurrentCaloriesJSON = function(cal) {
   var calories = {
-    "CurrentCaloriesData": {
+    "GetCurrentCaloriesData": {
         "type": "object",
         "objectId": "bt6Sample",
         "backgroundImage": {
             "sources": [
                 {
-                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
                     "size": "small",
                     "widthPixels": 0,
                     "heightPixels": 0
                 },
                 {
-                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
                     "size": "large",
                     "widthPixels": 0,
                     "heightPixels": 0
@@ -154,11 +199,11 @@ functions.WriteCurrentCaloriesJSON = function(cal) {
         "textContent": {
             "primaryText": {
                 "type": "PlainText",
-                "text": "Deine heutigen Kalorien betragen: "
+                "text": "Du hast heute bereits"
             },
             "secondaryText": {
                 "type": "PlainText",
-                "text": cal + " Kalorien"
+                "text": cal + " Kalorien eingenommen"
             }
         },
         "hintText": "Sag, \"Alexa, hilf mir\" falls du nicht weiter weißt."
@@ -166,8 +211,9 @@ functions.WriteCurrentCaloriesJSON = function(cal) {
 };
   
   var data = JSON.stringify(calories, null, 2);
+  
+  // erstellt und schreibt in eine JSON, die in APL benutzt wird
   fs.writeFileSync('/tmp/CurrentCalories.json', data);
-  console.log('This is after the write call');
 };
 
 // Funktion um den Wert, der noch fehlenden Kalorien bis zum Tagesbedarf ,in die JSON zu schreiben um in APL anzuzeigen
@@ -179,13 +225,51 @@ functions.WriteAddCaloriesJSON = function(cal) {
         "backgroundImage": {
             "sources": [
                 {
-                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
                     "size": "small",
                     "widthPixels": 0,
                     "heightPixels": 0
                 },
                 {
-                    "url": "https://wallpapercave.com/wp/rUSFi40.jpg",
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
+                    "size": "large",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                }
+            ]
+        },
+        "textContent": {
+            "secondaryText": {
+                "type": "PlainText",
+                "text": "Ich habe " + cal + " Kalorien heute hinzugefügt."
+            }
+        },
+        "hintText": "Sag, \"Alexa, hilf mir\" falls du nicht weiter weißt."
+    }
+};
+
+  var data = JSON.stringify(calories, null, 2);
+  
+  // erstellt und schreibt in eine JSON, die in APL benutzt wird
+  fs.writeFileSync('/tmp/AddCalories.json', data);
+};
+
+// Funktion um den Wert, der Kalorien vom bestimmten Datum ,in die JSON zu schreiben um in APL anzuzeigen
+functions.WriteCaloriesFromDateJSON = function(date, cal) {
+  var calories = {
+    "DateCaloriesData": {
+        "type": "object",
+        "objectId": "bt6Sample",
+        "backgroundImage": {
+            "sources": [
+                {
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
+                    "size": "small",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                },
+                {
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
                     "size": "large",
                     "widthPixels": 0,
                     "heightPixels": 0
@@ -195,11 +279,11 @@ functions.WriteAddCaloriesJSON = function(cal) {
         "textContent": {
             "primaryText": {
                 "type": "PlainText",
-                "text": "Kalorien heute hinzugefügt: "
+                "text": "Du hast am " + date + " "
             },
             "secondaryText": {
                 "type": "PlainText",
-                "text": cal + " Kalorien"
+                "text": cal + " Kalorien eingenommen"
             }
         },
         "hintText": "Sag, \"Alexa, hilf mir\" falls du nicht weiter weißt."
@@ -207,8 +291,9 @@ functions.WriteAddCaloriesJSON = function(cal) {
 };
   
   var data = JSON.stringify(calories, null, 2);
-  fs.writeFileSync('/tmp/AddCalories.json', data);
-  console.log('This is after the write call');
+  
+  // erstellt und schreibt in eine JSON, die in APL benutzt wird
+  fs.writeFileSync('/tmp/DateCalories.json', data);
 };
 
 // Funktion um die JSON zu lesen (hauptsächlich zum debuggen) 
@@ -221,4 +306,5 @@ functions.WriteAddCaloriesJSON = function(cal) {
 //console.log('This is after the read call');
 //};
 
+// Exportiert die Funktionen für die index.js
 module.exports = functions;
