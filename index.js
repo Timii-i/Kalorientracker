@@ -48,6 +48,7 @@ function Update_Date_Func(DB) { //Function, mit Datenbank als Parameter
   }
 }
 
+
 // Handler um den Tagesbedarf zu setzen
 const SetMaximumDailyCaloriesIntentHandler = {
   canHandle(handlerInput) {
