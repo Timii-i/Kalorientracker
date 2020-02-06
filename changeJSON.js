@@ -296,6 +296,48 @@ functions.WriteCaloriesFromDateJSON = function(date, cal) {
   fs.writeFileSync('/tmp/DateCalories.json', data);
 };
 
+// Funktion um die APL reinzuladen bei dem der User gebeten wird sein Geschlecht und Menge an Aktivität anzugeben
+functions.WriteSetMaximumCaloriesAlexaJSON = function(date, cal) {
+  var calories = {
+"SetMaxDailyCalories": {
+        "type": "object",
+        "objectId": "bt6Sample",
+        "backgroundImage": {
+            "sources": [
+                {
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
+                    "size": "small",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                },
+                {
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
+                    "size": "large",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                }
+            ]
+        },
+        "textContent": {
+            "primaryText": {
+                "type": "PlainText",
+                "text": "Zur Berechnung benötige ich:"
+            },
+            "secondaryText": {
+                "type": "PlainText",
+                "text": "Geschlecht und Aktivität"
+            }
+        },
+        "hintText": "Sag, \"Alexa, hilf mir\" falls du nicht weiter weißt."
+    }
+};
+  
+  var data = JSON.stringify(calories, null, 2);
+  
+  // erstellt und schreibt in eine JSON, die in APL benutzt wird
+  fs.writeFileSync('/tmp/SetMaxDailyCalories.json', data);
+};
+
 // Funktion um die JSON zu lesen (hauptsächlich zum debuggen) 
 //functions.Read_JSON = function() {
 //  

@@ -103,6 +103,10 @@ const SetMaxDailyCaloriesByAlexaIntentHandler = {
     var KalorienMax = 0;	
     var Bewegung = slots.Bewegung.value;	
     var Geschlecht = slots.Geschlecht.value;	
+    
+    // ruft die Funktion auf um in die JSON für APL zu schreiben
+    changeJSON.WriteSetMaximumCaloriesAlexaJSON();
+    const SetMaxDailyCaloriesData = require('/tmp/SetMaxDailyCalories.json');
 
     if (Geschlecht == "Männlich") {	
       KalorienMax = 2000;	
@@ -117,8 +121,8 @@ const SetMaxDailyCaloriesByAlexaIntentHandler = {
     var speakOutput = "Ich habe deinen Tagesbedarf nun anhand deiner Angaben auf " + KalorienMax + "gelegt.";	
 
     const user = await handlerInput.attributesManager.getPersistentAttributes();	
-      // Setzt den Wert für den Tagesbedarf gleich dem Wert den der User angegeben hat	
-      user.dailyMaxCalories = KalorienMax;	
+    // Setzt den Wert für den Tagesbedarf gleich dem Wert den der User angegeben hat	
+    user.dailyMaxCalories = KalorienMax;	
 
     return handlerInput.responseBuilder	
       .speak(speakOutput)
