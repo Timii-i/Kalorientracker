@@ -96,6 +96,9 @@ const SetMaxDailyCaloriesByAlexaIntentHandler = {
       && (handlerInput.requestEnvelope.request.intent.name === 'SetMaxDailyCaloriesByAlexaIntent');	
   },	
   async handle(handlerInput) {	
+
+	const SetMaxDailyCaloriesTemplate = require('./templates/SetMaxDailyCalories.json');
+
     const slots = handlerInput.requestEnvelope.request.intent.slots;	
     var KalorienMax = 0;	
     var Bewegung = slots.Bewegung.value;	
@@ -118,7 +121,13 @@ const SetMaxDailyCaloriesByAlexaIntentHandler = {
       user.dailyMaxCalories = KalorienMax;	
 
     return handlerInput.responseBuilder	
-      .speak(speakOutput)	
+      .speak(speakOutput)
+      .addDirective({
+                      type: 'Alexa.Presentation.APL.RenderDocument',
+                      version: '1.1',
+                      document: SetMaxDailyCaloriesTemplate,
+                      datasources: SetMaxDailyCaloriesData
+                    }) 	
       .getResponse();	
   },	
 };
