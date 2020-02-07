@@ -14,6 +14,9 @@ const LaunchRequestHandler = {
       // tieht die Daten aus data/welcome.json in den Skill
       const welcomeData = require('./data/welcome.json');
       const welcomeTemplate = require('./templates/welcome.json');
+	  const user = await handlerInput.attributesManager.getPersistentAttributes();
+      Update_Date_Func(user);
+	  
       
       const speechText = 'Willkommen bei deinem Kalorientracker. Du kannst deine täglichen Kalorien eintragen und deinen täglichen Bedarf an Kalorien angeben oder von mir ausrechnen lassen. Falls du Hilfe benötigst oder Fragen hast sag einfach Hilfe.';
   
@@ -114,7 +117,7 @@ const GetMaximumDailyCaloriesIntentHandler = {
       }
       else 
       {
-        speakOutput = 'Du hast noch keinen Tagesbedarf angegeben. Wenn du ein Tagesbedarf hinzufügen möchtest, sage zum Beispiel: Setz mein Tagesbedarf auf 200 Kalorien';
+        speakOutput = 'Du hast noch keinen Tagesbedarf angegeben. Wenn du ein Tagesbedarf hinzufügen möchtest, sage zum Beispiel: Setz mein Tagesbedarf auf 200 Kalorien oder lass ihn von mir ausrechnen';
       }
       return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -316,12 +319,11 @@ const HelpIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
   },
   handle(handlerInput) {
-    const speechText = 'You can say hello to me!';
+    const speechText = 'Du kannst deine täglichen Kalorien eintragen und deinen täglichen Bedarf an Kalorien angeben oder von mir ausrechnen lassen. Weiterhin kannst du fragen wieviele Kalorien du noch offen hast und fragen wieviele Kalorien du an einem bestimmten Tag gegessen hat';
 
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .withSimpleCard('Hello World', speechText)
       .getResponse();
   },
 };
