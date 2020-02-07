@@ -11,7 +11,7 @@ const LaunchRequestHandler = {
   },
   handle(handlerInput) {
     
-      // tieht die Daten aus data/welcome.json in den Skill
+      // zieht die Daten aus data/welcome.json in den Skill
       const welcomeData = require('./data/welcome.json');
       const welcomeTemplate = require('./templates/welcome.json');
       
