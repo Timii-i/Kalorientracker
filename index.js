@@ -14,8 +14,6 @@ const LaunchRequestHandler = {
       // zieht die Daten aus data/welcome.json in den Skill
       const welcomeData = require('./data/welcome.json');
       const welcomeTemplate = require('./templates/welcome.json');
-	  const user = await handlerInput.attributesManager.getPersistentAttributes();
-      Update_Date_Func(user);
 	  
       
       const speechText = 'Willkommen bei deinem Kalorientracker. Du kannst deine täglichen Kalorien eintragen und deinen täglichen Bedarf an Kalorien angeben oder von mir ausrechnen lassen. Falls du Hilfe benötigst oder Fragen hast sag einfach Hilfe.';
@@ -67,6 +65,7 @@ const SetMaximumDailyCaloriesIntentHandler = {
       var dailyMaxCalories = parseInt(slots.DailyMaxKalorienAnz.value,10);
       
       const user = await handlerInput.attributesManager.getPersistentAttributes();
+	  Update_Date_Func(user);
       
       // Setzt den Wert für den Tagesbedarf gleich dem Wert den der User angegeben hat
       user.dailyMaxCalories = dailyMaxCalories;
@@ -123,7 +122,8 @@ const SetMaxDailyCaloriesByAlexaIntentHandler = {
     }	
     var speakOutput = "Ich habe deinen Tagesbedarf nun anhand deiner Angaben auf " + KalorienMax + "gelegt.";	
 
-    const user = await handlerInput.attributesManager.getPersistentAttributes();	
+    const user = await handlerInput.attributesManager.getPersistentAttributes();
+	Update_Date_Func(user);	
     // Setzt den Wert für den Tagesbedarf gleich dem Wert den der User angegeben hat	
     user.dailyMaxCalories = KalorienMax;	
 
@@ -150,6 +150,7 @@ const GetMaximumDailyCaloriesIntentHandler = {
       const GetMaximumCaloriesTemplate = require('./templates/GetMaximumCalories.json');
       
       const user = await handlerInput.attributesManager.getPersistentAttributes();
+	  Update_Date_Func(user);
       var dailyMaxCalories = user.dailyMaxCalories;
       
       // ruft die Funktion auf um in die JSON für APL zu schreiben
@@ -253,6 +254,7 @@ const AddCaloriesIntentHandler = {
         var calories = parseInt(slots.KalorienAnz.value);
         
         const user = await handlerInput.attributesManager.getPersistentAttributes();
+		Update_Date_Func(user);
         if(user.currentCalories)
         {
           user.currentCalories += +calories;
@@ -300,6 +302,7 @@ const GetCaloriesFromDateIntent = {
         var date = slots.Datum.value;
         
         const user = await handlerInput.attributesManager.getPersistentAttributes();
+		Update_Date_Func(user);
         
         //Als beispiel, nehmen wir hier den derzeitigen Kalorienwert + 1000 um ihn "realistischer" zu gestalten
         var calories = user.currentCalories + 1000;
@@ -334,6 +337,7 @@ const GetCurrentCaloriesIntentHandler = {
     const TodaysCaloriesTemplate = require('./templates/TodaysCalories.json');
     
     const user = await handlerInput.attributesManager.getPersistentAttributes();
+	Update_Date_Func(user);
     var calories = user.currentCalories;
     
     // ruft die Funktion auf um in die JSON für APL zu schreiben
