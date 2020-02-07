@@ -11,7 +11,7 @@ const LaunchRequestHandler = {
   },
   handle(handlerInput) {
     
-      // tieht die Daten aus data/welcome.json in den Skill
+      // zieht die Daten aus data/welcome.json in den Skill
       const welcomeData = require('./data/welcome.json');
       const welcomeTemplate = require('./templates/welcome.json');
 	  const user = await handlerInput.attributesManager.getPersistentAttributes();
@@ -52,7 +52,6 @@ function Update_Date_Func(DB) { //Function, mit Datenbank als Parameter
 }
 
 
-
 // Handler um den Tagesbedarf zu setzen
 const SetMaximumDailyCaloriesIntentHandler = {
   canHandle(handlerInput) {
@@ -91,6 +90,53 @@ const SetMaximumDailyCaloriesIntentHandler = {
                     })
             .getResponse();
     }
+};
+
+//Handler zum Dialog um Daily Max Calories von Alexa berechnen zu lassen	
+const SetMaxDailyCaloriesByAlexaIntentHandler = {	
+  canHandle(handlerInput) {	
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'	
+      && (handlerInput.requestEnvelope.request.intent.name === 'SetMaxDailyCaloriesByAlexaIntent');	
+  },	
+  async handle(handlerInput) {	
+
+	const SetMaxDailyCaloriesTemplate = require('./templates/SetMaxDailyCalories.json');
+
+    const slots = handlerInput.requestEnvelope.request.intent.slots;	
+    var KalorienMax = 0;	
+    var Bewegung = slots.Bewegung.value;	
+    var Geschlecht = slots.Geschlecht.value;	
+    
+    // ruft die Funktion auf um in die JSON für APL zu schreiben
+    changeJSON.WriteSetMaximumCaloriesAlexaJSON();
+    const SetMaxDailyCaloriesData = require('/tmp/SetMaxDailyCalories.json');
+
+    if (Geschlecht == "Männlich") {	
+      KalorienMax = 2000;	
+    }	
+    else {	
+      KalorienMax = 1800;	
+    }	
+
+    if (Bewegung == "Viel") {	
+      KalorienMax += 200;	
+    }	
+    var speakOutput = "Ich habe deinen Tagesbedarf nun anhand deiner Angaben auf " + KalorienMax + "gelegt.";	
+
+    const user = await handlerInput.attributesManager.getPersistentAttributes();	
+    // Setzt den Wert für den Tagesbedarf gleich dem Wert den der User angegeben hat	
+    user.dailyMaxCalories = KalorienMax;	
+
+    return handlerInput.responseBuilder	
+      .speak(speakOutput)
+      .addDirective({
+                      type: 'Alexa.Presentation.APL.RenderDocument',
+                      version: '1.1',
+                      document: SetMaxDailyCaloriesTemplate,
+                      datasources: SetMaxDailyCaloriesData
+                    }) 	
+      .getResponse();	
+  },	
 };
 
 // Handler um den Tagesbedarf abzufragen
@@ -377,15 +423,15 @@ exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
     SetMaximumDailyCaloriesIntentHandler,
+    SetMaxDailyCaloriesByAlexaIntentHandler,
     GetMaximumDailyCaloriesIntentHandler,
     GetDifferenceCaloriesIntentHandler,
     AddCaloriesIntentHandler,
-	GetCaloriesFromDateIntent,
+	  GetCaloriesFromDateIntent,
     GetCurrentCaloriesIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
-    SessionEndedRequestHandler,
-    TestIntentHandler
+    SessionEndedRequestHandler
   )
   .addErrorHandlers(ErrorHandler)
   .withTableName('user')

@@ -1,0 +1,29 @@
+[1mdiff --git a/index.js b/index.js[m
+[1mindex 15a9b28..abdb04e 100644[m
+[1m--- a/index.js[m
+[1m+++ b/index.js[m
+[36m@@ -96,6 +96,9 @@[m [mconst SetMaxDailyCaloriesByAlexaIntentHandler = {[m
+       && (handlerInput.requestEnvelope.request.intent.name === 'SetMaxDailyCaloriesByAlexaIntent');	[m
+   },	[m
+   async handle(handlerInput) {	[m
+[32m+[m
+[32m+[m	[32mconst SetMaxDailyCaloriesTemplate = require('./templates/SetMaxDailyCalories.json');[m
+[32m+[m
+     const slots = handlerInput.requestEnvelope.request.intent.slots;	[m
+     var KalorienMax = 0;	[m
+     var Bewegung = slots.Bewegung.value;	[m
+[36m@@ -118,7 +121,13 @@[m [mconst SetMaxDailyCaloriesByAlexaIntentHandler = {[m
+       user.dailyMaxCalories = KalorienMax;	[m
+ [m
+     return handlerInput.responseBuilder	[m
+[31m-      .speak(speakOutput)	[m
+[32m+[m[32m      .speak(speakOutput)[m
+[32m+[m[32m      .addDirective({[m
+[32m+[m[32m                      type: 'Alexa.Presentation.APL.RenderDocument',[m
+[32m+[m[32m                      version: '1.1',[m
+[32m+[m[32m                      document: SetMaxDailyCaloriesTemplate,[m
+[32m+[m[32m                      datasources: SetMaxDailyCaloriesData[m
+[32m+[m[32m                    })[m[41m 	[m
+       .getResponse();	[m
+   },	[m
+ };[m
