@@ -21,13 +21,14 @@ const LaunchRequestHandler = {
       return handlerInput.responseBuilder
         .speak(speechText)
         .reprompt(speechText)
-                .addDirective({
+        // fügt directive beim Request hinzu um APL auf dem Echo anzeigen zu lassen
+        .addDirective({
                 type: 'Alexa.Presentation.APL.RenderDocument',
                 version: '1.1',
                 document: welcomeTemplate,
                 datasources: welcomeData
               })
-            .getResponse();
+        .getResponse();
   }
 };
 
@@ -41,7 +42,7 @@ function Update_Date_Func(DB) { //Function, mit Datenbank als Parameter
     DB.currentCalories = 0;
   }
   else {
-    if (DB.currentDate != date) { //Wenn Das Datum in der DB nicht das gleiche ist, wie der heutige Tag, Setz Alles um
+    if (DB.currentDate != date) { //Wenn Das Datum in der DB nicht das gleiche ist, wie der heutige Tag, updatet er das Datum 
       DB.currentCalories = 0;
       DB.currentDate = date;
       
@@ -65,7 +66,7 @@ const SetMaximumDailyCaloriesIntentHandler = {
       var dailyMaxCalories = parseInt(slots.DailyMaxKalorienAnz.value,10);
       
       const user = await handlerInput.attributesManager.getPersistentAttributes();
-	  Update_Date_Func(user);
+	    Update_Date_Func(user);
       
       // Setzt den Wert für den Tagesbedarf gleich dem Wert den der User angegeben hat
       user.dailyMaxCalories = dailyMaxCalories;
@@ -74,20 +75,22 @@ const SetMaximumDailyCaloriesIntentHandler = {
       changeJSON.WriteSetMaximumCaloriesJSON(dailyMaxCalories);
       const SetMaximumCaloriesData = require('/tmp/SetMaximumCalories.json');
       
+      // schreibt den Tagesbedarf in die Datenbank und speichert ihn
       handlerInput.attributesManager.setPersistentAttributes(user);
       await handlerInput.attributesManager.savePersistentAttributes(user);
 
       var speakOutput = 'Ich habe dein Tagesbedarf auf ' + dailyMaxCalories + ' Kalorien gesetzt';
       return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(repromptOutput)
-                    .addDirective({
+        .speak(speakOutput)
+        .reprompt(repromptOutput)
+        // fügt directive beim Request hinzu um APL auf dem Echo anzeigen zu lassen
+        .addDirective({
                       type: 'Alexa.Presentation.APL.RenderDocument',
                       version: '1.1',
                       document: SetMaximumCaloriesTemplate,
                       datasources: SetMaximumCaloriesData
                     })
-            .getResponse();
+        .getResponse();
     }
 };
 
@@ -123,12 +126,14 @@ const SetMaxDailyCaloriesByAlexaIntentHandler = {
     var speakOutput = "Ich habe deinen Tagesbedarf nun anhand deiner Angaben auf " + KalorienMax + "gelegt.";	
 
     const user = await handlerInput.attributesManager.getPersistentAttributes();
-	Update_Date_Func(user);	
+	  Update_Date_Func(user);	
     // Setzt den Wert für den Tagesbedarf gleich dem Wert den der User angegeben hat	
     user.dailyMaxCalories = KalorienMax;	
 
     return handlerInput.responseBuilder	
       .speak(speakOutput)
+      .reprompt(repromptOutput)
+      // fügt directive beim Request hinzu um APL auf dem Echo anzeigen zu lassen
       .addDirective({
                       type: 'Alexa.Presentation.APL.RenderDocument',
                       version: '1.1',
@@ -150,7 +155,7 @@ const GetMaximumDailyCaloriesIntentHandler = {
       const GetMaximumCaloriesTemplate = require('./templates/GetMaximumCalories.json');
       
       const user = await handlerInput.attributesManager.getPersistentAttributes();
-	  Update_Date_Func(user);
+	    Update_Date_Func(user);
       var dailyMaxCalories = user.dailyMaxCalories;
       
       // ruft die Funktion auf um in die JSON für APL zu schreiben
@@ -167,15 +172,16 @@ const GetMaximumDailyCaloriesIntentHandler = {
         speakOutput = 'Du hast noch keinen Tagesbedarf angegeben. Wenn du ein Tagesbedarf hinzufügen möchtest, sage zum Beispiel: Setz mein Tagesbedarf auf 200 Kalorien oder lass ihn von mir ausrechnen';
       }
       return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(repromptOutput)
-                 .addDirective({
+        .speak(speakOutput)
+        .reprompt(repromptOutput)
+        // fügt directive beim Request hinzu um APL auf dem Echo anzeigen zu lassen
+        .addDirective({
                       type: 'Alexa.Presentation.APL.RenderDocument',
                       version: '1.1',
                       document: GetMaximumCaloriesTemplate,
                       datasources: GetMaximumCaloriesData
                     }) 
-            .getResponse();
+        .getResponse();
     }
 };
 
@@ -194,48 +200,51 @@ const GetDifferenceCaloriesIntentHandler = {
       var caloriesDifference = dailyMaxCalories - calories;
       
       var speakOutput = '';
+      
+      // falls der User den Tagesbedarf bereits überschritten hat
       if (calories > dailyMaxCalories) {
         speakOutput = 'Du hast dein Tagesbedarf um ' + calories + ' Kalorien überschritten';
         
         const GetDiffCaloriesTemplate = require('./templates/GetDiffCalories.json');
+        // ruft die Funktion auf um in die JSON für APL zu schreiben
         changeJSON.WriteDifferenceCaloriesJSON(caloriesDifference);
         const GetDiffCaloriesData = require('/tmp/GetDifferenceCalories.json');
         
         return handlerInput.responseBuilder
-        .speak(speakOutput)
-        .reprompt(repromptOutput)
-        .addDirective({
+          .speak(speakOutput)
+          .reprompt(repromptOutput)
+          // fügt directive beim Request hinzu um APL auf dem Echo anzeigen zu lassen
+          .addDirective({
                       type: 'Alexa.Presentation.APL.RenderDocument',
                       version: '1.1',
                       document: GetDiffCaloriesTemplate,
                       datasources: GetDiffCaloriesData
                     }) 
-        .getResponse();
+          .getResponse();
       }
+      
+      // falls der User den Tagesbedarf noch nicht erreicht hat
       else 
       {
         speakOutput = 'Dir fehlen noch ' + caloriesDifference + ' Kalorien zu deinem Tagesbedarf';
         
         const GetDiff2CaloriesTemplate = require('./templates/GetDiff2Calories.json');
+        // ruft die Funktion auf um in die JSON für APL zu schreiben
         changeJSON.WriteDifferenceCalories2JSON(caloriesDifference);
         const GetDiff2CaloriesData = require('/tmp/GetDifferenceCalories2.json');
         
         return handlerInput.responseBuilder
-        .speak(speakOutput)
-        .reprompt(repromptOutput)
-        .addDirective({
+          .speak(speakOutput)
+          .reprompt(repromptOutput)
+          // fügt directive beim Request hinzu um APL auf dem Echo anzeigen zu lassen
+          .addDirective({
                       type: 'Alexa.Presentation.APL.RenderDocument',
                       version: '1.1',
                       document: GetDiff2CaloriesTemplate,
                       datasources: GetDiff2CaloriesData
                     }) 
-        .getResponse();
+         .getResponse();
       }
-      /*return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(repromptOutput)
-            .getResponse();
-            */
     }
 };
 
@@ -254,7 +263,9 @@ const AddCaloriesIntentHandler = {
         var calories = parseInt(slots.KalorienAnz.value);
         
         const user = await handlerInput.attributesManager.getPersistentAttributes();
-		Update_Date_Func(user);
+		    Update_Date_Func(user);
+		    
+		    // schaut nach ob der User bereits Kalorien an dem Tag zu sich genommen hat 
         if(user.currentCalories)
         {
           user.currentCalories += +calories;
@@ -274,15 +285,16 @@ const AddCaloriesIntentHandler = {
         var speakOutput = 'Ich habe ' + calories + ' Kalorien heute hinzugefügt';
         
         return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(repromptOutput)
-                  .addDirective({
+          .speak(speakOutput)
+          .reprompt(repromptOutput)
+          // fügt directive beim Request hinzu um APL auf dem Echo anzeigen zu lassen
+          .addDirective({
                       type: 'Alexa.Presentation.APL.RenderDocument',
                       version: '1.1',
                       document: SubmitCaloriesTemplate,
                       datasources: SubmitCaloriesData
                     }) 
-            .getResponse();
+          .getResponse();
     }
 };
 
@@ -302,7 +314,7 @@ const GetCaloriesFromDateIntent = {
         var date = slots.Datum.value;
         
         const user = await handlerInput.attributesManager.getPersistentAttributes();
-		Update_Date_Func(user);
+		    Update_Date_Func(user);
         
         //Als beispiel, nehmen wir hier den derzeitigen Kalorienwert + 1000 um ihn "realistischer" zu gestalten
         var calories = user.currentCalories + 1000;
@@ -313,15 +325,16 @@ const GetCaloriesFromDateIntent = {
         var speakOutput = 'Du hast am ' + date + " " + calories + ' Kalorien eingenommen';
         
         return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(repromptOutput)
-            .addDirective({
+          .speak(speakOutput)
+          .reprompt(repromptOutput)
+          // fügt directive beim Request hinzu um APL auf dem Echo anzeigen zu lassen
+          .addDirective({
                       type: 'Alexa.Presentation.APL.RenderDocument',
                       version: '1.1',
                       document: DateCaloriesTemplate,
                       datasources: DateCaloriesData
                     }) 
-            .getResponse();
+          .getResponse();
     }
 };
 
@@ -337,7 +350,7 @@ const GetCurrentCaloriesIntentHandler = {
     const TodaysCaloriesTemplate = require('./templates/TodaysCalories.json');
     
     const user = await handlerInput.attributesManager.getPersistentAttributes();
-	Update_Date_Func(user);
+	  Update_Date_Func(user);
     var calories = user.currentCalories;
     
     // ruft die Funktion auf um in die JSON für APL zu schreiben
@@ -345,6 +358,8 @@ const GetCurrentCaloriesIntentHandler = {
     const TodaysCaloriesData = require('/tmp/CurrentCalories.json');
     
     var speakOutput = '';
+    
+    // schaut nach ob der User bereits Kalorien zu sich genommen hat oder nicht
     if(user.currentCalories) {
       speakOutput = 'Du hast heute schon ' + calories + ' zu dir genommen';
     }else {
@@ -353,7 +368,8 @@ const GetCurrentCaloriesIntentHandler = {
     return handlerInput.responseBuilder
       .speak(speakOutput)
       .reprompt(repromptOutput)
-            .addDirective({
+      // fügt directive beim Request hinzu um APL auf dem Echo anzeigen zu lassen
+      .addDirective({
                       type: 'Alexa.Presentation.APL.RenderDocument',
                       version: '1.1',
                       document: TodaysCaloriesTemplate,
@@ -385,11 +401,10 @@ const CancelAndStopIntentHandler = {
         || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
   },
   handle(handlerInput) {
-    const speechText = 'Goodbye!';
+    const speechText = 'Auf Wiedersehen. Bis zum nächsten Mal!';
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .withSimpleCard('Hello World', speechText)
       .getResponse();
   },
 };
@@ -413,12 +428,14 @@ const ErrorHandler = {
     console.log(`Error handled: ${error.message}`);
 
     return handlerInput.responseBuilder
-      .speak('Me no understando')
-      .reprompt('Sorry, I can\'t understand the command. Please say again.')
+      .speak('Tut mir leid ich habe dich leider nicht verstanden.')
+      .reprompt('Bitte versuche es erneut')
       .getResponse();
   },
 };
 
+
+// Standard Repromt Text
 const repromptOutput = 'Was möchtest du jetzt machen ?';
 
 const skillBuilder = Alexa.SkillBuilders.standard();
