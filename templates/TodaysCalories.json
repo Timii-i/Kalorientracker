@@ -108,7 +108,7 @@
                 "items": [
                     {
                         "type": "Image",
-                        "source": "${payload.TodaysCaloriesData.backgroundImage.sources[0].url}",
+                        "source": "${payload.GetCurrentCaloriesData.backgroundImage.sources[0].url}",
                         "scale": "best-fill",
                         "width": "100vw",
                         "height": "100vh",
@@ -124,7 +124,7 @@
                         "height": "200",
                         "textAlign": "center",
                         "fontStyle": "normal",
-                        "text": "${payload.TodaysCaloriesData.textContent.primaryText.text}"
+                        "text": "${payload.GetCurrentCaloriesData.textContent.primaryText.text}"
                     },
                     {
                         "type": "Container",
@@ -140,7 +140,7 @@
                                 "height": "80",
                                 "textAlign": "center",
                                 "fontStyle": "normal",
-                                "text": "${payload.TodaysCaloriesData.textContent.secondaryText.text}"
+                                "text": "${payload.GetCurrentCaloriesData.textContent.secondaryText.text}"
                             },
                             {
                                 "description": "auflistung der möglichen aktionen",
@@ -151,7 +151,7 @@
                                 "height": "50",
                                 "textAlign": "center",
                                 "fontStyle": "normal",
-                                "text": "${payload.TodaysCaloriesData.textContent.tertiaryText.text}"
+                                "text": "${payload.GetCurrentCaloriesData.textContent.tertiaryText.text}"
                             },
                             {
                                 "description": "auflistung der möglichen aktionen",
@@ -162,12 +162,12 @@
                                 "height": "50",
                                 "textAlign": "center",
                                 "fontStyle": "normal",
-                                "text": "${payload.TodaysCaloriesData.textContent.quaternaryText.text}"
+                                "text": "${payload.GetCurrentCaloriesData.textContent.quaternaryText.text}"
                             },
                             {
                                 "when": "${viewport.shape != 'round'}",
                                 "type": "AlexaFooter",
-                                "footerHint": "${payload.TodaysCaloriesData.hintText}"
+                                "footerHint": "${payload.GetCurrentCaloriesData.hintText}"
                             }
                         ],
                         "grow": 1

@@ -108,7 +108,7 @@
                 "items": [
                     {
                         "type": "Image",
-                        "source": "${payload.SubmitCaloriesData.backgroundImage.sources[0].url}",
+                        "source": "${payload.AddCaloriesData.backgroundImage.sources[0].url}",
                         "scale": "best-fill",
                         "width": "100vw",
                         "height": "100vh",
@@ -124,7 +124,7 @@
                         "height": "100",
                         "textAlign": "center",
                         "fontStyle": "normal",
-                        "text": "${payload.SubmitCaloriesData.textContent.primaryText.text}"
+                        "text": "${payload.AddCaloriesData.textContent.primaryText.text}"
                     },
                     {
                         "type": "Container",
@@ -140,7 +140,7 @@
                                 "height": "150",
                                 "textAlign": "center",
                                 "fontStyle": "normal",
-                                "text": "${payload.SubmitCaloriesData.textContent.secondaryText.text}"
+                                "text": "${payload.AddCaloriesData.textContent.secondaryText.text}"
                             },
                             {
                                 "description": "auflistung der möglichen aktionen",
@@ -151,7 +151,7 @@
                                 "height": "50",
                                 "textAlign": "center",
                                 "fontStyle": "normal",
-                                "text": "${payload.SubmitCaloriesData.textContent.tertiaryText.text}"
+                                "text": "${payload.AddCaloriesData.textContent.tertiaryText.text}"
                             },
                             {
                                 "description": "auflistung der möglichen aktionen",
@@ -162,12 +162,12 @@
                                 "height": "50",
                                 "textAlign": "center",
                                 "fontStyle": "normal",
-                                "text": "${payload.SubmitCaloriesData.textContent.quaternaryText.text}"
+                                "text": "${payload.AddCaloriesData.textContent.quaternaryText.text}"
                             },
                             {
                                 "when": "${viewport.shape != 'round'}",
                                 "type": "AlexaFooter",
-                                "footerHint": "${payload.SubmitCaloriesData.hintText}"
+                                "footerHint": "${payload.AddCaloriesData.hintText}"
                             }
                         ],
                         "grow": 1
