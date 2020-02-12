@@ -85,6 +85,12 @@
                     "name": "GetCurrentCaloriesIntent",
                     "slots": [],
                     "samples": [
+                        "Wie viel habe ich heute schon gegessen",
+                        "Was habe ich heute schon gegessen",
+                        "Wieviele Kalorien habe ich heute schon zu mir genommen",
+                        "Wieviele Kalorien habe ich schon heute gegessen",
+                        "Wie viele Kalorien habe ich heute schon gegessen",
+                        "Wie viele Kalorien habe ich schon heute zu mir genommen",
                         "Wie viele Kalorien habe ich schon zu mir genommen",
                         "Wie viel habe ich schon gegessen",
                         "Wieviele Kalorien habe ich schon zu mir genommen",
