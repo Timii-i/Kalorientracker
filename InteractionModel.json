@@ -6,6 +6,7 @@
                 {
                     "name": "AMAZON.CancelIntent",
                     "samples": [
+                        "abbrechen",
                         "cancel"
                     ]
                 },
@@ -57,6 +58,8 @@
                         }
                     ],
                     "samples": [
+                        "Setz meinen Kalorienbedarf auf {DailyMaxKalorienAnz} Kalorien",
+                        "Änder meinen Kalorienbedarf auf {DailyMaxKalorienAnz} Kalorien",
                         "Änder meinen Tagesbedarf auf {DailyMaxKalorienAnz} Kalorien",
                         "Setz mein Tagebedarf auf {DailyMaxKalorienAnz} Kalorien",
                         "Mein Tagebesarf ist {DailyMaxKalorienAnz} Kalorien",
@@ -82,6 +85,12 @@
                     "name": "GetCurrentCaloriesIntent",
                     "slots": [],
                     "samples": [
+                        "Wie viel habe ich heute schon gegessen",
+                        "Was habe ich heute schon gegessen",
+                        "Wieviele Kalorien habe ich heute schon zu mir genommen",
+                        "Wieviele Kalorien habe ich schon heute gegessen",
+                        "Wie viele Kalorien habe ich heute schon gegessen",
+                        "Wie viele Kalorien habe ich schon heute zu mir genommen",
                         "Wie viele Kalorien habe ich schon zu mir genommen",
                         "Wie viel habe ich schon gegessen",
                         "Wieviele Kalorien habe ich schon zu mir genommen",
@@ -164,6 +173,46 @@
                         "Wieviel hab ich am {Datum} gegessen",
                         "Wieviele Kalorien hab ich am {Datum} eingenommen"
                     ]
+                },
+                {
+                    "name": "AMAZON.MoreIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateSettingsIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NextIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PageUpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PageDownIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PreviousIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollRightIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollDownIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollLeftIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollUpIntent",
+                    "samples": []
                 }
             ],
             "types": [
