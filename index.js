@@ -63,7 +63,7 @@ const SetMaximumDailyCaloriesIntentHandler = {
       
       const slots = handlerInput.requestEnvelope.request.intent.slots;
       // Der vom User genannte Tagesbedarf
-      var dailyMaxCalories = parseInt(slots.DailyMaxKalorienAnz.value,10);
+      var dailyMaxCalories = parseInt(slots.DailyMaxKalorienAnz.value);
       
       const user = await handlerInput.attributesManager.getPersistentAttributes();
 	    Update_Date_Func(user);
@@ -203,7 +203,8 @@ const GetDifferenceCaloriesIntentHandler = {
       
       // falls der User den Tagesbedarf bereits überschritten hat
       if (calories > dailyMaxCalories) {
-        speakOutput = 'Du hast dein Tagesbedarf um ' + calories + ' Kalorien überschritten';
+        let cal = calories - dailyMaxCalories;
+        speakOutput = 'Du hast dein Tagesbedarf um ' + cal + ' Kalorien überschritten';
         
         const GetDiffCaloriesTemplate = require('./templates/GetDiffCalories.json');
         // ruft die Funktion auf um in die JSON für APL zu schreiben
@@ -260,7 +261,7 @@ const AddCaloriesIntentHandler = {
       
         const slots = handlerInput.requestEnvelope.request.intent.slots;
         // Die vom User genannte Kalorienanzahl
-        var calories = parseInt(slots.KalorienAnz.value, 10);
+        var calories = parseInt(slots.KalorienAnz.value);
         
         const user = await handlerInput.attributesManager.getPersistentAttributes();
 		    Update_Date_Func(user);
