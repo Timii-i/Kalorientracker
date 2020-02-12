@@ -25,7 +25,7 @@
             },
             "secondaryText": {
                 "type": "PlainText",
-                "text": "-Kalorienbedarf berechnen"
+                "text": "-Tagesbedarf berechnen"
             },
             "tertiaryText": {
                 "type": "PlainText",
@@ -33,7 +33,7 @@
             },
             "quaternaryText": {
                 "type": "PlainText",
-                "text": "-Kalorienbedarf festlegen"
+                "text": "-Tagesbedarf festlegen"
             }
         },
         "hintText": "Sag, \"Alexa, hilf mir\" falls du nicht weiter weißt."
