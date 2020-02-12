@@ -171,7 +171,11 @@
                     "samples": [
                         "Wieviel Kalorien hatte ich am {Datum}",
                         "Wieviel hab ich am {Datum} gegessen",
-                        "Wieviele Kalorien hab ich am {Datum} eingenommen"
+                        "Wieviele Kalorien hab ich am {Datum} eingenommen",
+						"Wieviele Kalorien hatte ich {Datum}",
+						"Wieviel hab ich {Datum} gegessen",
+						"Wieviele Kalorien hab ich {Datum} eingenommen",
+						"Was habe ich am {Datum} gegessen"
                     ]
                 },
                 {
