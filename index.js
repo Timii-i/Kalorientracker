@@ -276,7 +276,7 @@ const AddCaloriesIntentHandler = {
         }
         
         // ruft die Funktion auf um in die JSON für APL zu schreiben
-        changeJSON.WriteAddCaloriesJSON(user.currentCalories);
+        changeJSON.WriteAddCaloriesJSON(calories);
         const SubmitCaloriesData = require('/tmp/AddCalories.json');
         
         handlerInput.attributesManager.setPersistentAttributes(user);
