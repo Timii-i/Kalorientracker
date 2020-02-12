@@ -368,6 +368,25 @@ const GetCaloriesFromDateIntent = {
                     }) 
           .getResponse();
         }
+        else if(date == today) {
+          calories =- user.currentCalories;
+          speakOutput = 'Du hast heute schon ' + calories + ' zu dir genommen';
+          
+          changeJSON.WriteCaloriesFromDateTodayJSON(calories);
+          let DateCaloriesData = require('/tmp/DateCaloriesToday.json');
+        
+          return handlerInput.responseBuilder
+          .speak(speakOutput)
+          .reprompt(repromptOutput)
+          // fügt directive beim Request hinzu um APL auf dem Echo anzeigen zu lassen
+          .addDirective({
+                      type: 'Alexa.Presentation.APL.RenderDocument',
+                      version: '1.1',
+                      document: DateCaloriesTemplate,
+                      datasources: DateCaloriesData
+                    }) 
+          .getResponse();
+        }
         else {
           speakOutput = 'Du hast am ' + date + ' keine Kalorien zu dir genommen';
           
