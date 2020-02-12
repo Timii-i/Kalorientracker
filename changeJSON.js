@@ -255,7 +255,7 @@ functions.WriteAddCaloriesJSON = function(cal) {
 };
 
 // Funktion um den Wert, der Kalorien vom bestimmten Datum ,in die JSON zu schreiben um in APL anzuzeigen
-functions.WriteCaloriesFromDateJSON = function(date, cal) {
+functions.WriteCaloriesFromDateJSON = function(date) {
   var calories = {
     "DateCaloriesData": {
         "type": "object",
