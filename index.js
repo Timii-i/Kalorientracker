@@ -257,14 +257,17 @@ const AddCaloriesIntentHandler = {
     },
     async handle(handlerInput) {
       
-        let SubmitCaloriesTemplate = require('./templates/SubmitCalories.json');
-      
         const slots = handlerInput.requestEnvelope.request.intent.slots;
         // Die vom User genannte Kalorienanzahl
         var calories = parseInt(slots.KalorienAnz.value);
         
         const user = await handlerInput.attributesManager.getPersistentAttributes();
 		    Update_Date_Func(user);
+		    
+		    let SubmitCaloriesTemplate = require('./templates/SubmitCalories.json');
+		    // ruft die Funktion auf um in die JSON für APL zu schreiben
+        changeJSON.WriteAddCaloriesJSON(calories);
+        let SubmitCaloriesData = require('/tmp/AddCalories.json');
 		    
 		    // schaut nach ob der User bereits Kalorien an dem Tag zu sich genommen hat 
         if(user.currentCalories)
@@ -275,10 +278,6 @@ const AddCaloriesIntentHandler = {
         {
           user.currentCalories = calories;
         }
-        
-        // ruft die Funktion auf um in die JSON für APL zu schreiben
-        changeJSON.WriteAddCaloriesJSON(calories);
-        let SubmitCaloriesData = require('/tmp/AddCalories.json');
         
         handlerInput.attributesManager.setPersistentAttributes(user);
         await handlerInput.attributesManager.savePersistentAttributes(user);
