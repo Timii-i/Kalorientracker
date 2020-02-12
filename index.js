@@ -208,7 +208,7 @@ const GetDifferenceCaloriesIntentHandler = {
         
         const GetDiffCaloriesTemplate = require('./templates/GetDiffCalories.json');
         // ruft die Funktion auf um in die JSON für APL zu schreiben
-        changeJSON.WriteDifferenceCaloriesJSON(caloriesDifference);
+        changeJSON.WriteDifferenceCaloriesJSON(cal);
         const GetDiffCaloriesData = require('/tmp/GetDifferenceCalories.json');
         
         return handlerInput.responseBuilder
