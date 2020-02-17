@@ -1,0 +1,179 @@
+{
+    "type": "APL",
+    "version": "1.1",
+    "settings": {},
+    "theme": "dark",
+    "import": [
+        {
+            "name": "alexa-layouts",
+            "version": "1.0.0"
+        }
+    ],
+    "resources": [
+        {
+            "description": "Stock color for the dark theme",
+            "when": "${viewport.theme == 'dark'}",
+            "colors": {
+                "colorTextPrimary": "#000000"
+            }
+        },
+        {
+            "description": "Standard font sizes",
+            "dimensions": {
+                "textSizeBody": 48,
+                "textSizePrimary": 27,
+                "textSizeSecondary": 23,
+                "textSizeSecondaryHint": 25
+            }
+        },
+        {
+            "description": "Common spacing values",
+            "dimensions": {
+                "spacingThin": 6,
+                "spacingSmall": 12,
+                "spacingMedium": 24,
+                "spacingLarge": 48,
+                "spacingExtraLarge": 72
+            }
+        },
+        {
+            "description": "Common margins and padding",
+            "dimensions": {
+                "marginTop": 40,
+                "marginLeft": 60,
+                "marginRight": 60,
+                "marginBottom": 40
+            }
+        }
+    ],
+    "styles": {
+        "textStyleBase": {
+            "values": [
+                {
+                    "color": "@colorTextPrimary"
+                }
+            ]
+        },
+        "textStyleBase1": {
+            "extend": "textStyleBase",
+            "values": {
+                "fontWeight": "400",
+                "fontFamily": "amazon ember"
+            }
+        },
+        "textStyleBase2": {
+            "extend": "textStyleBase",
+            "values": {
+                "fontWeight": "400",
+                "fontFamily": "amazon ember"
+            }
+        },
+        "mixinBody": {
+            "values": {
+                "fontSize": "@textSizeBody"
+            }
+        },
+        "mixinPrimary": {
+            "values": {
+                "fontSize": "@textSizePrimary"
+            }
+        },
+        "textStylePrimary": {
+            "description": "style für die stichpunkte ",
+            "extend": [
+                "textStyleBase1",
+                "mixinPrimary"
+            ]
+        },
+        "textStyleBody": {
+            "description": "style für den willkommensheader",
+            "extend": [
+                "textStyleBase2",
+                "mixinBody"
+            ]
+        }
+    },
+    "onMount": [],
+    "graphics": {},
+    "commands": {},
+    "layouts": {},
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "height": "100vh",
+                "items": [
+                    {
+                        "type": "Image",
+                        "source": "${payload.GetDiffCaloriesData.backgroundImage.sources[0].url}",
+                        "scale": "best-fill",
+                        "width": "100vw",
+                        "height": "100vh",
+                        "position": "absolute"
+                    },
+                    {
+                        "description": "Willkommenstext",
+                        "type": "Text",
+                        "paddingTop": "@marginTop",
+                        "style": "textStyleBody",
+                        "paddingLeft": "@marginLeft",
+                        "paddingRight": "@marginRight",
+                        "height": "200",
+                        "textAlign": "center",
+                        "fontStyle": "normal",
+                        "text": "${payload.GetDiffCaloriesData.textContent.primaryText.text}"
+                    },
+                    {
+                        "type": "Container",
+                        "justifyContent": "${viewport.shape == 'round' ? 'center' : 'end'}",
+                        "items": [
+                            {
+                                "description": "auflistung der möglichen aktionen",
+                                "type": "Text",
+                                "fontSize": "70dp",
+                                "style": "textStylePrimary",
+                                "paddingLeft": "@marginLeft",
+                                "paddingRight": "@marginRight",
+                                "height": "80",
+                                "textAlign": "center",
+                                "fontStyle": "normal",
+                                "text": "${payload.GetDiffCaloriesData.textContent.secondaryText.text}"
+                            },
+                            {
+                                "description": "auflistung der möglichen aktionen",
+                                "type": "Text",
+                                "style": "textStylePrimary",
+                                "paddingLeft": "@marginLeft",
+                                "paddingRight": "@marginRight",
+                                "height": "50",
+                                "textAlign": "center",
+                                "fontStyle": "normal",
+                                "text": "${payload.GetDiffCaloriesData.textContent.tertiaryText.text}"
+                            },
+                            {
+                                "description": "auflistung der möglichen aktionen",
+                                "type": "Text",
+                                "style": "textStylePrimary",
+                                "paddingLeft": "@marginLeft",
+                                "paddingRight": "@marginRight",
+                                "height": "50",
+                                "textAlign": "center",
+                                "fontStyle": "normal",
+                                "text": "${payload.GetDiffCaloriesData.textContent.quaternaryText.text}"
+                            },
+                            {
+                                "when": "${viewport.shape != 'round'}",
+                                "type": "AlexaFooter",
+                                "footerHint": "${payload.GetDiffCaloriesData.hintText}"
+                            }
+                        ],
+                        "grow": 1
+                    }
+                ]
+            }
+        ]
+    }
+}

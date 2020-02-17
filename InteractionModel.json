@@ -5,7 +5,10 @@
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
-                    "samples": []
+                    "samples": [
+                        "abbrechen",
+                        "cancel"
+                    ]
                 },
                 {
                     "name": "AMAZON.HelpIntent",
@@ -20,7 +23,9 @@
                 },
                 {
                     "name": "AMAZON.StopIntent",
-                    "samples": []
+                    "samples": [
+                        "stop"
+                    ]
                 },
                 {
                     "name": "AMAZON.NavigateHomeIntent",
@@ -30,6 +35,8 @@
                     "name": "GetMaximumDailyCaloriesIntent",
                     "slots": [],
                     "samples": [
+                        "Wie hoch ist mein Tagesbedarf an Kalorien",
+                        "Was ist mein Tagebedarf",
                         "Gib mir meinen Kalorienbedarf",
                         "Gib mir meinen Tagesbedarf",
                         "Was ist denn mein Tagesbedarf",
@@ -44,8 +51,21 @@
                 },
                 {
                     "name": "SetMaximumDailyCaloriesIntent",
-                    "slots": [],
+                    "slots": [
+                        {
+                            "name": "DailyMaxKalorienAnz",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
                     "samples": [
+                        "Setz meinen Kalorienbedarf auf {DailyMaxKalorienAnz} Kalorien",
+                        "Änder meinen Kalorienbedarf auf {DailyMaxKalorienAnz} Kalorien",
+                        "Änder meinen Tagesbedarf auf {DailyMaxKalorienAnz} Kalorien",
+                        "Setz mein Tagebedarf auf {DailyMaxKalorienAnz} Kalorien",
+                        "Mein Tagebesarf ist {DailyMaxKalorienAnz} Kalorien",
+                        "Mein Tagebedarf ist {DailyMaxKalorienAnz}",
+                        "Mein Tagesbedarf sind {DailyMaxKalorienAnz} Kalorien",
+                        "Setz mein Tagesbedarf auf {DailyMaxKalorienAnz}",
                         "Setz mein Maximum runter",
                         "Setz mein Maximum niedriger",
                         "Setz mein Maximum höher",
@@ -65,29 +85,307 @@
                     "name": "GetCurrentCaloriesIntent",
                     "slots": [],
                     "samples": [
-                        "Tägliche Kalorien",
+                        "Wie viel habe ich heute schon gegessen",
+                        "Was habe ich heute schon gegessen",
+                        "Wieviele Kalorien habe ich heute schon zu mir genommen",
+                        "Wieviele Kalorien habe ich schon heute gegessen",
+                        "Wie viele Kalorien habe ich heute schon gegessen",
+                        "Wie viele Kalorien habe ich schon heute zu mir genommen",
+                        "Wie viele Kalorien habe ich schon zu mir genommen",
+                        "Wie viel habe ich schon gegessen",
                         "Wieviele Kalorien habe ich schon zu mir genommen",
                         "Wieviel habe ich schon gegessen"
                     ]
                 },
                 {
                     "name": "GetDifferenceCaloriesIntent",
-                    "slots": [
-                        {
-                            "name": "Zahl",
-                            "type": "AMAZON.NUMBER"
-                        }
-                    ],
+                    "slots": [],
                     "samples": [
-                        "Gehen noch {Zahl} Kalorien",
+                        "Wie viel Kalorien fehlen mir noch bis zum Tagebedarf",
+                        "Wie viel fehlt mir nur zum Tagebedarf",
+                        "Wie viele Kalorien noch bis zum Maximum",
+                        "Wie viele Kalorien noch bis zum Tagesbedarf",
                         "Wieviel noch bis zum Maximum",
                         "Weiviele Kalorien kann ich noch zu mir nehmen",
                         "Wieviel darf ich noch essen",
                         "Wieviel kann ich noch essen"
                     ]
+                },
+                {
+                    "name": "AddCaloriesIntent",
+                    "slots": [
+                        {
+                            "name": "KalorienAnz",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "Trage {KalorienAnz} Kalorien ein",
+                        "Ich habe heute {KalorienAnz} Kalorien zu mir genommen",
+                        "Ich habe heute {KalorienAnz} Kalorien gegessen",
+                        "Füge {KalorienAnz} Kalorien hinzu"
+                    ]
+                },
+                {
+                    "name": "SetMaxDailyCaloriesByAlexaIntent",
+                    "slots": [
+                        {
+                            "name": "Geschlecht",
+                            "type": "Geschlecht",
+                            "samples": [
+                                "{Geschlecht}",
+                                "Ich bin eine {Geschlecht}",
+                                "Ich bin {Geschlecht}",
+                                "Ich bin ein {Geschlecht}"
+                            ]
+                        },
+                        {
+                            "name": "Bewegung",
+                            "type": "Bewegung",
+                            "samples": [
+                                "ich würde sagen schon {Bewegung}",
+                                "{Bewegung}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "berechne meinen Kalorienbedarf",
+                        "änder meinen kalorienbedarf",
+                        "ich möchte meinen kalorienbedarf ändern",
+                        "tagesbedarf ausrechnen",
+                        "ich möchte meinen tagesbedarf ändern",
+                        "berechne meinen Tagesbedarf",
+                        "ich will weniger essen",
+                        "Ich will mehr essen",
+                        "Änder meinen Tagesbedarf"
+                    ]
+                },
+                {
+                    "name": "GetCaloriesFromDateIntent",
+                    "slots": [
+                        {
+                            "name": "Datum",
+                            "type": "AMAZON.DATE"
+                        }
+                    ],
+                    "samples": [
+                        "Wieviel Kalorien hatte ich am {Datum}",
+                        "Wieviel hab ich am {Datum} gegessen",
+                        "Wieviele Kalorien hab ich am {Datum} eingenommen",
+						"Wieviele Kalorien hatte ich {Datum}",
+						"Wieviel hab ich {Datum} gegessen",
+						"Wieviele Kalorien hab ich {Datum} eingenommen",
+						"Was habe ich am {Datum} gegessen"
+                    ]
+                },
+                {
+                    "name": "AMAZON.MoreIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateSettingsIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NextIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PageUpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PageDownIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PreviousIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollRightIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollDownIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollLeftIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollUpIntent",
+                    "samples": []
                 }
             ],
-            "types": []
-        }
+            "types": [
+                {
+                    "name": "Geschlecht",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Weiblich",
+                                "synonyms": [
+                                    "Frau",
+                                    "Mädchen",
+                                    "Feminin"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Männlich",
+                                "synonyms": [
+                                    "Mann",
+                                    "Junge",
+                                    "Maskulin",
+                                    "Kerl"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Bewegung",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Wenig",
+                                "synonyms": [
+                                    "geht so",
+                                    "nicht so viel",
+                                    "geht",
+                                    "ein bisschen",
+                                    "a little bit",
+                                    "relativ wenig"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Viel",
+                                "synonyms": [
+                                    "schon etwas",
+                                    "einiges",
+                                    "ne menge"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "SetMaxDailyCaloriesByAlexaIntent",
+                    "delegationStrategy": "ALWAYS",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.1115303531953"
+                    },
+                    "slots": [
+                        {
+                            "name": "Geschlecht",
+                            "type": "Geschlecht",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1115303531953.209009677744"
+                            }
+                        },
+                        {
+                            "name": "Bewegung",
+                            "type": "Bewegung",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1115303531953.789205886214"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "GetCaloriesFromDateIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Datum",
+                            "type": "AMAZON.DATE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Confirm.Intent.1115303531953",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Du bist also {Geschlecht} und du bewegst dich {Bewegung} richtig?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1115303531953.209009677744",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Welches Geschlecht hast du"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Bist du männlich oder weiblich"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Slot.1115303531953.209009677744",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Du bist also {Geschlecht} , richtig?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1115303531953.789205886214",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Würdest du sagen du bewegst dich viel oder wenig"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Bewegst du dich eher viel oder wenig"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Slot.1115303531953.789205886214",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Du bewegst dich also {Bewegung} oder?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Slot.1054655127675.811348251956",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "du bist also {Geschlecht} richtig?"
+                    }
+                ]
+            }
+        ]
     }
 }

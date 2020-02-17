@@ -1,0 +1,41 @@
+{
+    "bodyTemplate6Data": {
+        "type": "object",
+        "objectId": "bt6Sample",
+        "backgroundImage": {
+            "sources": [
+                {
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
+                    "size": "small",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                },
+                {
+                    "url": "https://www.dieter-forte-gesamtschule.de/wp-content/uploads/2017/10/Seitenbild-Sport-960x480.jpg",
+                    "size": "large",
+                    "widthPixels": 0,
+                    "heightPixels": 0
+                }
+            ]
+        },
+        "textContent": {
+            "primaryText": {
+                "type": "PlainText",
+                "text": "Willkommen bei deinem Kalorientracker"
+            },
+            "secondaryText": {
+                "type": "PlainText",
+                "text": "-Tagesbedarf berechnen"
+            },
+            "tertiaryText": {
+                "type": "PlainText",
+                "text": "-Kalorien eintragen"
+            },
+            "quaternaryText": {
+                "type": "PlainText",
+                "text": "-Tagesbedarf festlegen"
+            }
+        },
+        "hintText": "Sag, \"Alexa, hilf mir\" falls du nicht weiter weißt."
+    }
+}
